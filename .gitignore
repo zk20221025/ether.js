@@ -1,1 +1,4 @@
 /.deps
+/test.ts
+/.DS_Store
+/.prettierrc.json
