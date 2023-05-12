@@ -31,7 +31,7 @@ const main = async () => {
     contractUSDT.once('Transfer', (from, to, value)=>{
       // 打印结果
       console.log(
-      `${from} -> ${to} ${ethers.utils.formatUnits(ethers.BigNumber.from(value),6)}`
+      `once: ${from} -> ${to} ${ethers.utils.formatUnits(ethers.BigNumber.from(value),6)}`
       )
     })
 
