@@ -41,6 +41,11 @@ const bytecodeERC20 =
 const factoryERC20 = new ethers.ContractFactory(abiERC20, bytecodeERC20, wallet)
 
 const main = async () => {
+        // 读取钱包内ETH余额
+    const balanceETH = await provider.getBalance(wallet.address)
+
+    // 如果钱包ETH足够
+    if(ethers.utils.formatEther(balanceETH) > '0.002'){
     // 1. 利用contractFactory部署ERC20代币合约
     console.log('\n1. 利用contractFactory部署ERC20代币合约')
     // 部署合约，填入constructor的参数
@@ -75,6 +80,12 @@ const main = async () => {
     console.log(
         `V神钱包中的代币余额: ${await contractERC20.balanceOf('vitalik.eth')}`,
     )
+        }else{
+        // 如果ETH不足
+        console.log("ETH不足，去水龙头领一些Goerli ETH")
+        console.log("1. chainlink水龙头: https://faucets.chain.link/goerli")
+        console.log("2. paradigm水龙头: https://faucet.paradigm.xyz/")
+    }
 }
 
 main()

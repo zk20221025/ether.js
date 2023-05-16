@@ -86,34 +86,23 @@ const main = async () => {
     )
 
     // 8. 调用multiTransferToken()函数，给每个钱包转 0.0001 WETH
-    console.log('\n5. 调用multiTransferToken()函数，给每个钱包转 0.001 WETH')
-    // 先approve WETH给Airdrop合约
-    const txApprove = await contractWETH.approve(
-        addressAirdrop,
-        utils.parseEther("1"),
-    )
-    await txApprove.wait()
-    // 发起交易
-    const tx2 = await contractAirdrop.multiTransferToken(
-        addressWETH,
-        addresses,
-        amounts,
-    ).then((tx) => {
-    console.log(`交易 hash：${tx.hash}`)
-    return tx.wait()
-}).catch((err) => {
-    console.error(err)
-})
 
-    // 等待交易上链
-    await tx2.wait()
-    // console.log(`交易详情：`)
-    // console.log(tx2)
-    // 读取WETH余额
-    const balanceWETH2 = await contractWETH.balanceOf(addresses[10])
-    console.log(
-        `发送后该钱包WETH持仓: ${ethers.utils.formatEther(balanceWETH2)}\n`,
-    )
+console.log("\n5. 调用multiTransferToken()函数，给每个钱包转 0.001 WETH")
+// 先approve WETH给Airdrop合约
+const txApprove = await contractWETH.approve(addressAirdrop, utils.parseEther("1"))
+await txApprove.wait()
+// 发起交易
+const tx2 = await contractAirdrop.multiTransferToken(addressWETH, addresses, amounts)
+// 等待交易上链
+await tx2.wait()
+// console.log(`交易详情：`)
+// console.log(tx2)
+// 读取WETH余额
+const balanceWETH2 = await contractWETH.balanceOf(addresses[10].address)
+console.log(`发送后该钱包WETH持仓: ${ethers.utils.formatEther(balanceWETH2)}\n`)
+ 
+
+
 }
 
 main()
