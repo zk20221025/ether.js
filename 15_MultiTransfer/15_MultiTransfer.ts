@@ -90,7 +90,7 @@ const main = async () => {
     // 先approve WETH给Airdrop合约
     const txApprove = await contractWETH.approve(
         addressAirdrop,
-        utils.parseEther('1'),
+        utils.parseEther("1"),
     )
     await txApprove.wait()
     // 发起交易
@@ -98,7 +98,13 @@ const main = async () => {
         addressWETH,
         addresses,
         amounts,
-    )
+    ).then((tx) => {
+    console.log(`交易 hash：${tx.hash}`)
+    return tx.wait()
+}).catch((err) => {
+    console.error(err)
+})
+
     // 等待交易上链
     await tx2.wait()
     // console.log(`交易详情：`)
