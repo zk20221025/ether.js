@@ -13,7 +13,7 @@ const iface = new utils.Interface([
     "function transfer(address, uint) public returns (bool)",
 ])
 
-// 3. 限制访问rpc速率，不然调用频率会超出限制，报错。
+    console.log("\n3. 限制访问rpc速率，不然调用频率会超出限制，报错。")
 function throttle(fn, delay) {
     let timer;
     return function(){
@@ -26,6 +26,7 @@ function throttle(fn, delay) {
         }
     }
 }
+    console.log("\n3. 运行完成")
 
 const main = async () => {
     // 4. 监听pending的erc20 transfer交易，获取交易详情，然后解码。
@@ -51,6 +52,9 @@ const main = async () => {
         }
     }
 }, 100));
+
+console.log("exit")
+
 };
 
 main()
