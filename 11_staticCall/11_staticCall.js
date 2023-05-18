@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 
 //准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md 
 const ALCHEMY_MAINNET_URL = 'https://eth-mainnet.g.alchemy.com/v2/SlcbMIYMG6iLTeZ67RmWlzOUbSbT8NG7';
-const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_MAINNET_URL);
+const provider = new ethers.JsonRpcProvider(ALCHEMY_MAINNET_URL);
 
 // 利用私钥和provider创建wallet对象
 const privateKey = ''
@@ -28,18 +28,18 @@ const main = async () => {
     const balanceDAI = await contractDAI.balanceOf(address)
     const balanceDAIVitalik = await contractDAI.balanceOf("vitalik.eth")
 
-    console.log(`测试钱包 DAI持仓: ${ethers.utils.formatEther(balanceDAI)}\n`)
-    console.log(`vitalik DAI持仓: ${ethers.utils.formatEther(balanceDAIVitalik)}\n`)
+    console.log(`测试钱包 DAI持仓: ${ethers.formatEther(balanceDAI)}\n`)
+    console.log(`vitalik DAI持仓: ${ethers.formatEther(balanceDAIVitalik)}\n`)
 
     // 2. 用staticCall尝试调用transfer转账10000 DAI，msg.sender为V神，交易将成功
     console.log("\n2.  用callStatic尝试调用transfer转账1 DAI，msg.sender为V神地址")
     // 发起交易
-    const tx = await contractDAI.callStatic.transfer("vitalik.eth", ethers.utils.parseEther("10000"), {from: "vitalik.eth"})
+    const tx = await contractDAI.callStatic.transfer("vitalik.eth", ethers.parseEther("10000"), {from: "vitalik.eth"})
     console.log(`交易会成功吗？：`, tx)
 
     // 3. 用staticCall尝试调用transfer转账10000 DAI，msg.sender为测试钱包地址，交易将失败
     console.log("\n3.  用callStatic尝试调用transfer转账1 DAI，msg.sender为测试钱包地址")
-    const tx2 = await contractDAI.callStatic.transfer("vitalik.eth", ethers.utils.parseEther("10000"), {from: address})
+    const tx2 = await contractDAI.callStatic.transfer("vitalik.eth", ethers.parseEther("10000"), {from: address})
     console.log(`交易会成功吗？：`, tx)
 
     } catch (e) {

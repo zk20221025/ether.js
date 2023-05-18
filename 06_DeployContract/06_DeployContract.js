@@ -12,7 +12,7 @@ import { ethers } from 'ethers'
 // 准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md
 const ALCHEMY_GOERLI_URL =
     'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82'
-const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
+const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
 
 // 利用私钥和provider创建wallet对象
 const privateKey =
@@ -45,7 +45,7 @@ const main = async () => {
     const balanceETH = await provider.getBalance(wallet.address)
 
     // 如果钱包ETH足够
-    if(ethers.utils.formatEther(balanceETH) > '0.002'){
+    if(ethers.formatEther(balanceETH) > '0.002'){
     // 1. 利用contractFactory部署ERC20代币合约
     console.log('\n1. 利用contractFactory部署ERC20代币合约')
     // 部署合约，填入constructor的参数

@@ -1,10 +1,10 @@
-import { ethers, utils } from 'ethers'
+import { ethers } from 'ethers'
 
 // 1. 创建HD钱包
 console.log('\n1. 创建HD钱包')
 // 通过助记词生成HD钱包
 const mnemonic = `air organ twist rule prison symptom jazz cheap rather dizzy verb glare jeans orbit weapon universe require tired sing casino business anxiety seminar hunt`
-const hdNode = utils.HDNode.fromMnemonic(mnemonic)
+const hdNode = ethers.HDNodeWallet.fromPhrase(mnemonic)
 console.log(hdNode)
 
 // 2. 获得20个钱包的地址
@@ -20,14 +20,14 @@ for (let i = 0; i < numWallet; i++) {
     addresses.push(walletNew.address)
 }
 console.log(addresses)
-const amounts = Array(20).fill(ethers.utils.parseEther('0.0001'))
+const amounts = Array(20).fill(ethers.parseEther('0.0001'))
 console.log(`发送数额：${amounts}`)
 
 // 3. 创建provider和wallet，发送代币用
 //准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md
 const ALCHEMY_GOERLI_URL =
     'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82'
-const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
+const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
 
 // 利用私钥和provider创建wallet对象
 // 如果这个钱包没goerli测试网ETH了
@@ -89,7 +89,7 @@ const main = async () => {
 
 console.log("\n5. 调用multiTransferToken()函数，给每个钱包转 0.001 WETH")
 // 先approve WETH给Airdrop合约
-const txApprove = await contractWETH.approve(addressAirdrop, utils.parseEther("1"))
+const txApprove = await contractWETH.approve(addressAirdrop, ethers.parseEther("1"))
 await txApprove.wait()
 // 发起交易
 const tx2 = await contractAirdrop.multiTransferToken(addressWETH, addresses, amounts)
@@ -98,7 +98,7 @@ await tx2.wait()
 // console.log(`交易详情：`)
 // console.log(tx2)
 // 读取WETH余额
-const balanceWETH2 = await contractWETH.balanceOf(addresses[10].address)
+const balanceWETH2 = await contractWETH.balanceOf(addresses[10])
 console.log(`发送后该钱包WETH持仓: ${ethers.utils.formatEther(balanceWETH2)}\n`)
  
 

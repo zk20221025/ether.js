@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 // 利用Alchemy的rpc节点连接以太坊测试网络
 // 准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md 
 const ALCHEMY_GOERLI_URL = 'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82';
-const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
+const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
 
 // 创建随机的wallet对象
 const wallet1 = ethers.Wallet.createRandom()
@@ -17,7 +17,7 @@ const privateKey = '0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d59
 const wallet2 = new ethers.Wallet(privateKey, provider)
 
 // 从助记词创建wallet对象
-const wallet3 = ethers.Wallet.fromMnemonic(mnemonic.phrase)
+const wallet3 = ethers.Wallet.fromPhrase(mnemonic.phrase)
 
 const main = async () => {
     // 1. 获取钱包地址
@@ -55,12 +55,12 @@ const main = async () => {
     console.log(`\n5. 发送ETH（测试网）`);
     // i. 打印交易前余额
     console.log(`i. 发送前余额`)
-    console.log(`钱包1: ${ethers.utils.formatEther(await wallet1WithProvider.getBalance())} ETH`)
-    console.log(`钱包2: ${ethers.utils.formatEther(await wallet2.getBalance())} ETH`)
+    console.log(`钱包1: ${ethers.formatEther(await wallet1WithProvider.getBalance())} ETH`)
+    console.log(`钱包2: ${ethers.formatEther(await wallet2.getBalance())} ETH`)
     // ii. 构造交易请求，参数：to为接收地址，value为ETH数额
     const tx = {
         to: address1,
-        value: ethers.utils.parseEther("0.001")
+        value: ethers.parseEther("0.001")
     }
     // iii. 发送交易，获得收据
     console.log(`\nii. 等待交易在区块链确认（需要几分钟）`)
@@ -69,8 +69,8 @@ const main = async () => {
     console.log(receipt) // 打印交易详情
     // iv. 打印交易后余额
     console.log(`\niii. 发送后余额`)
-    console.log(`钱包1: ${ethers.utils.formatEther(await wallet1WithProvider.getBalance())} ETH`)
-    console.log(`钱包2: ${ethers.utils.formatEther(await wallet2.getBalance())} ETH`)
+    console.log(`钱包1: ${ethers.formatEther(await wallet1WithProvider.getBalance())} ETH`)
+    console.log(`钱包2: ${ethers.formatEther(await wallet2.getBalance())} ETH`)
 }
 
 main()

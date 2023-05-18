@@ -8,11 +8,11 @@ import { ethers } from 'ethers'
 //准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md
 const ALCHEMY_GOERLI_URL =
     'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82'
-const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
+const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
 
 // 利用私钥和provider创建wallet对象
 const privateKey =
-    ''
+    ''https://www.wtf.academy/assets/images/10-3-de6c78745601e096f4d0f462c3407e46.png
 const wallet = new ethers.Wallet(privateKey, provider)
 
 // WETH的ABI
@@ -42,7 +42,7 @@ const main = async () => {
     }
     // 发起交易，可读操作（view/pure）可以用 provider.call(tx)
     const balanceWETH = await provider.call(tx1)
-    console.log(`存款前WETH持仓: ${ethers.utils.formatEther(balanceWETH)}\n`)
+    console.log(`存款前WETH持仓: ${ethers.formatEther(balanceWETH)}\n`)
 
     // 2. 调用desposit()函数，将0.001 ETH转为WETH
     console.log('\n2. 调用desposit()函数，存入0.001 ETH')
@@ -53,7 +53,7 @@ const main = async () => {
     const tx2 = {
         to: addressWETH,
         data: param2,
-        value: ethers.utils.parseEther('0.001'),
+        value: ethers.parseEther('0.001'),
     }
     // 发起交易，写入操作需要 wallet.sendTransaction(tx)
     const receipt1 = await wallet.sendTransaction(tx2)
@@ -63,7 +63,7 @@ const main = async () => {
     console.log(receipt1)
     const balanceWETH_deposit = await contractWETH.balanceOf(address)
     console.log(
-        `存款后WETH持仓: ${ethers.utils.formatEther(balanceWETH_deposit)}\n`,
+        `存款后WETH持仓: ${ethers.formatEther(balanceWETH_deposit)}\n`,
     )
 }
 

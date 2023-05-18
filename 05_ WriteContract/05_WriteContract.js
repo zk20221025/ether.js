@@ -9,7 +9,7 @@ import { ethers } from 'ethers'
 // 利用Alchemy的rpc节点连接以太坊网络
 // 准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md
 const INFURA_GOERLI_URL = 'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82'
-const provider = new ethers.providers.JsonRpcProvider(INFURA_GOERLI_URL)
+const provider = new ethers.JsonRpcProvider(INFURA_GOERLI_URL)
 
 // 利用私钥和provider创建wallet对象
 const privateKey =
@@ -38,12 +38,12 @@ const main = async () => {
     // 读取WETH合约的链上信息（WETH abi）
     console.log('\n1. 读取WETH余额')
     const balanceWETH = await contractWETH.balanceOf(address)
-    console.log(`存款前WETH持仓: ${ethers.utils.formatEther(balanceWETH)}\n`)
+    console.log(`存款前WETH持仓: ${ethers.formatEther(balanceWETH)}\n`)
 
     console.log('\n2. 调用desposit()函数，存入0.001 ETH')
     // 发起交易
     const tx = await contractWETH.deposit({
-        value: ethers.utils.parseEther('0.001'),
+        value: ethers.parseEther('0.001'),
     })
     // 等待交易上链
     await tx.wait()
@@ -51,20 +51,20 @@ const main = async () => {
     console.log(tx)
     const balanceWETH_deposit = await contractWETH.balanceOf(address)
     console.log(
-        `存款后WETH持仓: ${ethers.utils.formatEther(balanceWETH_deposit)}\n`,
+        `存款后WETH持仓: ${ethers.formatEther(balanceWETH_deposit)}\n`,
     )
 
     console.log('\n3. 调用transfer()函数，给vitalik转账0.001 WETH')
     // 发起交易
     const tx2 = await contractWETH.transfer(
         'vitalik.eth',
-        ethers.utils.parseEther('0.001'),
+        ethers.parseEther('0.001'),
     )
     // 等待交易上链
     await tx2.wait()
     const balanceWETH_transfer = await contractWETH.balanceOf(address)
     console.log(
-        `转账后WETH持仓: ${ethers.utils.formatEther(balanceWETH_transfer)}\n`,
+        `转账后WETH持仓: ${ethers.formatEther(balanceWETH_transfer)}\n`,
     )
 }
 
