@@ -34,7 +34,7 @@ const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
 // 请使用自己的小号钱包测试，钱包地址: 0x338f8891D6BdC58eEB4754352459cC461EfD2a5E ,请不要给此地址发送任何ETH
 // 注意不要把自己的私钥上传到github上
 const privateKey =
-    ''
+    '0x220dcca66eade77247d22f4de81332e0b8aced92b96a2c91ca0bd3e11ee98480'
 const wallet = new ethers.Wallet(privateKey, provider)
 
 // 4. 声明Airdrop合约

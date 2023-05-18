@@ -12,7 +12,7 @@ const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL)
 
 // 利用私钥和provider创建wallet对象
 const privateKey =
-    ''https://www.wtf.academy/assets/images/10-3-de6c78745601e096f4d0f462c3407e46.png
+    '0x220dcca66eade77247d22f4de81332e0b8aced92b96a2c91ca0bd3e11ee98480'
 const wallet = new ethers.Wallet(privateKey, provider)
 
 // WETH的ABI

@@ -5,7 +5,6 @@
 import { ethers } from 'ethers'
 // 利用Infura的rpc节点连接以太坊网络
 // 准备Infura API Key, 教程：https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL02_Infura/readme.md
-const INFURA_ID = '8280c1f722bf4d1ab88eb72177679d82'
 // 连接rinkeby测试网
 const provider = new ethers.JsonRpcProvider(
     `https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82`,

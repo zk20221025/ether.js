@@ -6,7 +6,7 @@ const ALCHEMY_GOERLI_URL = 'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb721
 const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
 
 // 利用私钥和provider创建wallet对象
-const privateKey = '0x503f38a9c967ed597e47fe25643985f032b072db8075426a92110f82df48dfcb'
+const privateKey = '0x220dcca66eade77247d22f4de81332e0b8aced92b96a2c91ca0bd3e11ee98480'
 const wallet = new ethers.Wallet(privateKey, provider)
 
 // 创建 EIP712 Domain

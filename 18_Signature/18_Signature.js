@@ -15,7 +15,7 @@ import * as contractJson from "./contract.json" assert {type: "json"};
 const ALCHEMY_GOERLI_URL = 'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82';
 const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
 // 利用私钥和provider创建wallet对象
-const privateKey = ''
+const privateKey = '0x220dcca66eade77247d22f4de81332e0b8aced92b96a2c91ca0bd3e11ee98480'
 const wallet = new ethers.Wallet(privateKey, provider)
 
 // 2. 根据allowlist地址和tokenId生成msgHash，并签名

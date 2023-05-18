@@ -6,7 +6,7 @@ const ALCHEMY_MAINNET_URL = 'https://eth-mainnet.g.alchemy.com/v2/SlcbMIYMG6iLTe
 const provider = new ethers.JsonRpcProvider(ALCHEMY_MAINNET_URL);
 
 // 利用私钥和provider创建wallet对象
-const privateKey = ''
+const privateKey = '0x220dcca66eade77247d22f4de81332e0b8aced92b96a2c91ca0bd3e11ee98480'
 const wallet = new ethers.Wallet(privateKey, provider)
 
 // DAI的ABI

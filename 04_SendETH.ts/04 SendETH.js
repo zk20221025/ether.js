@@ -13,7 +13,7 @@ const wallet1WithProvider = wallet1.connect(provider)
 const mnemonic = wallet1.mnemonic // 获取助记词
 
 // 利用私钥和provider创建wallet对象
-const privateKey = '0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b'
+const privateKey = '0x220dcca66eade77247d22f4de81332e0b8aced92b96a2c91ca0bd3e11ee98480'
 const wallet2 = new ethers.Wallet(privateKey, provider)
 
 // 从助记词创建wallet对象
