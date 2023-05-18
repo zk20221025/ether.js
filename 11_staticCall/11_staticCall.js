@@ -32,14 +32,14 @@ const main = async () => {
     console.log(`vitalik DAI持仓: ${ethers.formatEther(balanceDAIVitalik)}\n`)
 
     // 2. 用staticCall尝试调用transfer转账10000 DAI，msg.sender为V神，交易将成功
-    console.log("\n2.  用callStatic尝试调用transfer转账1 DAI，msg.sender为V神地址")
+    console.log("\n2.  用staticCall尝试调用transfer转账1 DAI，msg.sender为V神地址")
     // 发起交易
-    const tx = await contractDAI.callStatic.transfer("vitalik.eth", ethers.parseEther("10000"), {from: "vitalik.eth"})
+    const tx = await contractDAI.transfer.staticCall("vitalik.eth", ethers.parseEther("10000"), {from: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"})
     console.log(`交易会成功吗？：`, tx)
 
     // 3. 用staticCall尝试调用transfer转账10000 DAI，msg.sender为测试钱包地址，交易将失败
-    console.log("\n3.  用callStatic尝试调用transfer转账1 DAI，msg.sender为测试钱包地址")
-    const tx2 = await contractDAI.callStatic.transfer("vitalik.eth", ethers.parseEther("10000"), {from: address})
+    console.log("\n3.  用staticCall尝试调用transfer转账1 DAI，msg.sender为测试钱包地址")
+    const tx2 = await contractDAI.transfer.staticCall("vitalik.eth", ethers.parseEther("10000"), {from: address})
     console.log(`交易会成功吗？：`, tx)
 
     } catch (e) {

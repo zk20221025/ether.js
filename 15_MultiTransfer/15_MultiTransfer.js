@@ -65,16 +65,16 @@ const main = async () => {
     console.log('\n3. 读取一个地址的ETH和WETH余额')
     //读取WETH余额
     const balanceWETH = await contractWETH.balanceOf(addresses[10])
-    console.log(`WETH持仓: ${ethers.utils.formatEther(balanceWETH)}\n`)
+    console.log(`WETH持仓: ${ethers.formatEther(balanceWETH)}\n`)
     //读取ETH余额
     const balanceETH = await provider.getBalance(addresses[10])
-    console.log(`ETH持仓: ${ethers.utils.formatEther(balanceETH)}\n`)
+    console.log(`ETH持仓: ${ethers.formatEther(balanceETH)}\n`)
 
     // 7. 调用multiTransferETH()函数，给每个钱包转 0.0001 ETH
     console.log('\n4. 调用multiTransferETH()函数，给每个钱包转 0.0001 ETH')
     // 发起交易
     const tx = await contractAirdrop.multiTransferETH(addresses, amounts, {
-        value: ethers.utils.parseEther('0.002'),
+        value: ethers.parseEther('0.002'),
     })
     // 等待交易上链
     await tx.wait()
@@ -82,7 +82,7 @@ const main = async () => {
     // console.log(tx)
     const balanceETH2 = await provider.getBalance(addresses[10])
     console.log(
-        `发送后该钱包ETH持仓: ${ethers.utils.formatEther(balanceETH2)}\n`,
+        `发送后该钱包ETH持仓: ${ethers.formatEther(balanceETH2)}\n`,
     )
 
     // 8. 调用multiTransferToken()函数，给每个钱包转 0.0001 WETH
@@ -99,7 +99,7 @@ await tx2.wait()
 // console.log(tx2)
 // 读取WETH余额
 const balanceWETH2 = await contractWETH.balanceOf(addresses[10])
-console.log(`发送后该钱包WETH持仓: ${ethers.utils.formatEther(balanceWETH2)}\n`)
+console.log(`发送后该钱包WETH持仓: ${ethers.formatEther(balanceWETH2)}\n`)
  
 
 
