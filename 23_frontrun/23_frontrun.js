@@ -2,12 +2,12 @@ import { ethers } from "ethers";
 
 // 1. 创建provider
 var url = "ws://127.0.0.1:8545";
-const provider = new ethers.providers.WebSocketProvider(url);
+const provider = new ethers.WebSocketProvider(url);
 let network = provider.getNetwork()
 network.then(res => console.log(`[${(new Date).toLocaleTimeString()}] 连接到 chain ID ${res.chainId}`));
 
 // 2. 创建interface对象，用于解码交易详情。
-const iface = new ethers.utils.Interface([
+const iface = new ethers.Interface([
     "function mint() external",
 ])
 
