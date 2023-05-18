@@ -1,4 +1,4 @@
-import { ethers,utils } from "ethers";
+import { ethers } from "ethers";
 import { MerkleTree } from "merkletreejs";
 import * as contractJson from "./contract.json" assert {type: "json"};
 
@@ -12,8 +12,8 @@ const tokens = [
     "0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB"
 ];
 // leaf, merkletree, proof
-const leaf       = tokens.map(x => utils.keccak256(x))
-const merkletree = new MerkleTree(leaf, utils.keccak256, { sortPairs: true });
+const leaf       = tokens.map(x => ethers.keccak256(x))
+const merkletree = new MerkleTree(leaf, ethers.keccak256, { sortPairs: true });
 const proof      = merkletree.getHexProof(leaf[0]);
 const root = merkletree.getHexRoot()
 console.log("Leaf:")
@@ -26,10 +26,10 @@ console.log("\nRoot:")
 console.log(root)
 
 // 准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md 
-const ALCHEMY_GOERLI_URL = 'https://eth-goerli.alchemyapi.io/v2/GlaeWuylnNM3uuOo-SAwJxuwTdqHaY5l';
-const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
+const ALCHEMY_GOERLI_URL = 'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82';
+const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
 // 利用私钥和provider创建wallet对象
-const privateKey = '0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b'
+const privateKey = '0x220dcca66eade77247d22f4de81332e0b8aced92b96a2c91ca0bd3e11ee98480'
 const wallet = new ethers.Wallet(privateKey, provider)
 
 // 3. 创建合约工厂
@@ -50,21 +50,25 @@ const abiNFT = [
 const bytecodeNFT = contractJson.default.object;
 const factoryNFT = new ethers.ContractFactory(abiNFT, bytecodeNFT, wallet);
 
-console.log("\n2. 利用contractFactory部署NFT合约")
-// 部署合约，填入constructor的参数
-const contractNFT = await factoryNFT.deploy("WTF Merkle Tree", "WTF", root)
-console.log(`合约地址: ${contractNFT.address}`);
-// console.log("部署合约的交易详情")
-// console.log(contractNFT.deployTransaction)
-console.log("等待合约部署上链")
-await contractNFT.deployed()
-// 也可以用 contractNFT.deployTransaction.wait()
-console.log("合约已上链")
+const main = async () => {
+    // 4. 利用contractFactory部署NFT合约
+        console.log("\n2. 利用contractFactory部署NFT合约")
+        // 部署合约，填入constructor的参数
+        const contractNFT = await factoryNFT.deploy("WTF Merkle Tree", "WTF", root)
+        console.log(`合约地址: ${contractNFT.target}`);
+        console.log("等待合约部署上链")
+        await contractNFT.waitForDeployment()
+        // 也可以用 contractNFT.deployTransaction.wait()
+        console.log("合约已上链")
 
-console.log("\n3. 调用mint()函数，利用merkle tree验证白名单，给第一个地址铸造NFT")
-console.log(`NFT名称: ${await contractNFT.name()}`)
-console.log(`NFT代号: ${await contractNFT.symbol()}`)
-let tx = await contractNFT.mint(tokens[0], "0", proof)
-console.log("铸造中，等待交易上链")
-await tx.wait()
-console.log(`mint成功，地址${tokens[0]} 的NFT余额: ${await contractNFT.balanceOf(tokens[0])}\n`)
+        // 5. 调用mint()函数，利用merkle tree验证白名单，给第0个地址铸造NFT
+        console.log("\n3. 调用mint()函数，利用merkle tree验证白名单，给第一个地址铸造NFT")
+        console.log(`NFT名称: ${await contractNFT.name()}`)
+        console.log(`NFT代号: ${await contractNFT.symbol()}`)
+        let tx = await contractNFT.mint(tokens[0], "0", proof)
+        console.log("铸造中，等待交易上链")
+        await tx.wait()
+        console.log(`mint成功，地址${tokens[0]} 的NFT余额: ${await contractNFT.balanceOf(tokens[0])}\n`)
+
+}
+main()
