@@ -43,20 +43,20 @@ const main = async () => {
 
     // 4. 获取链上发送交易次数    
     console.log(`\n4. 获取链上交易次数`);
-    const txCount1 = await wallet1WithProvider.getTransactionCount()
-    const txCount2 = await wallet2.getTransactionCount()
+    const txCount1 = await provider.getTransactionCount(wallet1WithProvider)
+    const txCount2 = await provider.getTransactionCount(wallet2)
     console.log(`钱包1发送交易次数: ${txCount1}`)
     console.log(`钱包2发送交易次数: ${txCount2}`)
 
     // 5. 发送ETH
-    // 如果这个钱包没rinkeby测试网ETH了，去水龙头领一些，钱包地址: 0xe16C1623c1AA7D919cd2241d8b36d9E79C1Be2A2
-    // 1. chainlink水龙头: https://faucets.chain.link/rinkeby
+    // 如果这个钱包没goerli测试网ETH了，去水龙头领一些，钱包地址: 0xe16C1623c1AA7D919cd2241d8b36d9E79C1Be2A2
+    // 1. chainlink水龙头: https://faucets.chain.link/goerli
     // 2. paradigm水龙头: https://faucet.paradigm.xyz/
     console.log(`\n5. 发送ETH（测试网）`);
     // i. 打印交易前余额
     console.log(`i. 发送前余额`)
-    console.log(`钱包1: ${ethers.formatEther(await wallet1WithProvider.getBalance())} ETH`)
-    console.log(`钱包2: ${ethers.formatEther(await wallet2.getBalance())} ETH`)
+    console.log(`钱包1: ${ethers.formatEther(await provider.getBalance(wallet1WithProvider))} ETH`)
+    console.log(`钱包2: ${ethers.formatEther(await provider.getBalance(wallet2))} ETH`)
     // ii. 构造交易请求，参数：to为接收地址，value为ETH数额
     const tx = {
         to: address1,
@@ -69,8 +69,8 @@ const main = async () => {
     console.log(receipt) // 打印交易详情
     // iv. 打印交易后余额
     console.log(`\niii. 发送后余额`)
-    console.log(`钱包1: ${ethers.formatEther(await wallet1WithProvider.getBalance())} ETH`)
-    console.log(`钱包2: ${ethers.formatEther(await wallet2.getBalance())} ETH`)
+    console.log(`钱包1: ${ethers.formatEther(await provider.getBalance(wallet1WithProvider))} ETH`)
+    console.log(`钱包2: ${ethers.formatEther(await provider.getBalance(wallet2))} ETH`)
 }
 
 main()
