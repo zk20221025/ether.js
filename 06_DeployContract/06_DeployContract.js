@@ -10,7 +10,7 @@ import { ethers } from "ethers";
 
 // 利用Alchemy的rpc节点连接以太坊网络
 // 准备 alchemy API 可以参考https://github.com/AmazingAng/WTFSolidity/blob/main/Topics/Tools/TOOL04_Alchemy/readme.md 
-const ALCHEMY_GOERLI_URL = 'https://eth-mainnet.g.alchemy.com/v2/SlcbMIYMG6iLTeZ67RmWlzOUbSbT8NG7';
+const ALCHEMY_GOERLI_URL = 'https://goerli.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82';
 const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
 
 // 利用私钥和provider创建wallet对象
