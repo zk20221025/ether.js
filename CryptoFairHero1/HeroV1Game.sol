@@ -77,7 +77,7 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
         address _charityAddress,//公益地址
         address _token,//ERC代币地址 _token为空，为eth，不为空则为erc20代币地址。
         uint8 _charityPercentage,//公益金额比例
-        uint8 _referrPercentage,//参与者金额比例
+        uint8 _referrPercentage,//推广人金额比例
         uint8 _drawPercentage // 开奖人获得金额比例
     ) {
         _charityPercentage = _charityPercentage % 100;
@@ -146,7 +146,6 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
 
     function joinGame(uint256 _amount, address _referrer) external payable whenNotPaused {
         require(GameStatus.Open == _gameStatus);
-        // 
         _amount = _getValueOrRevert(_amount);
         //缺少检查金额（最小）
         emit Join(msg.sender, _amount);
