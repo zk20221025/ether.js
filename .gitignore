@@ -1,6 +1,4 @@
 /.deps
-/test.ts
-/.DS_Store
-/.prettierrc.json
-/06_DeployContract/artifacts
+/.deploys
 /CryptoFairHero1/artifacts
+/.prettierrc.json
