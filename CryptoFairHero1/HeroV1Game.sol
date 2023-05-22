@@ -70,15 +70,15 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
 
     constructor(
         uint256 _gameId,
-        uint256 _minJoinAmount,
-        uint256 _minJoinPlayer,
-        uint256 _guarantee,
-        address _creator,
-        address _charityAddress,
+        uint256 _minJoinAmount,//参与游戏所需最小金额
+        uint256 _minJoinPlayer,//参与游戏所需最少人数
+        uint256 _guarantee,//保证金
+        address _creator,//创建者
+        address _charityAddress,//公益地址
         address _token,//ERC代币地址 _token为空，为eth，不为空则为erc20代币地址。
-        uint8 _charityPercentage,
-        uint8 _referrPercentage,
-        uint8 _drawPercentage // 开奖金额
+        uint8 _charityPercentage,//公益金额比例
+        uint8 _referrPercentage,//参与者金额比例
+        uint8 _drawPercentage // 开奖人获得金额比例
     ) {
         _charityPercentage = _charityPercentage % 100;
         _referrPercentage = _referrPercentage % 100;
