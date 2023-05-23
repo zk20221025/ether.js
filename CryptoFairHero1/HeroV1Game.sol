@@ -70,15 +70,15 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
 
     constructor(
         uint256 _gameId,
-        uint256 _minJoinAmount,//参与游戏所需最小金额
-        uint256 _minJoinPlayer,//参与游戏所需最少人数
-        uint256 _guarantee,//保证金
-        address _creator,//创建者
-        address _charityAddress,//公益地址
-        address _token,//ERC代币地址 _token为空，为eth，不为空则为erc20代币地址。
-        uint8 _charityPercentage,//公益金额比例
-        uint8 _referrPercentage,//推荐人提成比例
-        uint8 _drawPercentage // 开奖人获得金额比例
+        uint256 _minJoinAmount,
+        uint256 _minJoinPlayer,
+        uint256 _guarantee,
+        address _creator,
+        address _charityAddress,
+        address _token,
+        uint8 _charityPercentage,
+        uint8 _referrPercentage,
+        uint8 _drawPercentage
     ) {
         _charityPercentage = _charityPercentage % 100;
         _referrPercentage = _referrPercentage % 100;
@@ -137,18 +137,18 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
         _lastStatus = _gameStatus;
         _gameStatus = GameStatus.Paused;
         _pause();
-    }//暂停
+    }
 
     function unpauseGame() external onlyRole(PAUSER_ROLE) whenPaused {
         _gameStatus = _lastStatus;
         _unpause();
-    }//取消暂停
+    }
 
     function joinGame(uint256 _amount, address _referrer) external payable whenNotPaused {
         require(GameStatus.Open == _gameStatus);
         require(_amount >= gameInfo.minJoinAmount);
+
         _amount = _getValueOrRevert(_amount);
-        //缺少检查金额（最小）
 
         emit Join(msg.sender, _amount);
 
@@ -160,22 +160,22 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
                 gameInfo._referrerReward += _reward;
                 emit Referrer(_referrer, _reward);
             }
-        }//是否得到应得金额，多或少
+        }
 
-        _joinTotal += _amount;//总下注金额
+        _joinTotal += _amount;
         gameInfo._joinTotal = _joinTotal;
-        playerTotal[msg.sender] += _amount;//记录某地址投了多少钱
+        playerTotal[msg.sender] += _amount;
 
-        players.push(PlayerInfo({addr: msg.sender, amount: _amount}));//记录数组
+        players.push(PlayerInfo({addr: msg.sender, amount: _amount}));
     }
-    //开奖
+
     function drawGame() external whenNotPaused {
         require(GameStatus.Open == _gameStatus && players.length >= gameInfo.minJoinPlayer);
 
-        gameInfo._charityTotal = _charityTotal = (_joinTotal * gameInfo.charityPercentage) / 100;//计算慈善金额总额
+        gameInfo._charityTotal = _charityTotal = (_joinTotal * gameInfo.charityPercentage) / 100;
         
-        uint256 _drawReward = (_joinTotal * gameInfo.drawPercentage) / 100;//开奖人的奖励
-        uint256 _random = getRandom(_joinTotal);//
+        uint256 _drawReward = (_joinTotal * gameInfo.drawPercentage) / 100;
+        uint256 _random = getRandom(_joinTotal);
         uint256 _sum = 0;
 
         for (uint256 i = 0; i < players.length; i++) {
@@ -215,9 +215,9 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
         _gameStatus = GameStatus.Completed;
         emit Completed();
 
-        _sendValueOrRevert(creator, _remain);//保证金归还
+        _sendValueOrRevert(creator, _remain);
     }
-        //取消游戏
+        
     function cancelGame() external whenNotPaused {
         require(GameStatus.Open == _gameStatus && players.length < gameInfo.minJoinPlayer && msg.sender == creator);
         
@@ -229,7 +229,7 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
             gameInfo._referrerReward = 0;
         }
     }
-    //当游戏取消时，游戏创建者取回保证金。
+
     function getGuarantee(bool force) external whenNotPaused nonReentrant {
         require(GameStatus.Canceled == _gameStatus);
         if (force) {
@@ -256,14 +256,14 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
             _sendValueOrRevert(creator, _balance());
         }
     }
-    //把慈善金额发给慈善机构
+
     function getCharity() external whenNotPaused {
         require(_charityTotal > 0);
         uint256 _c = _charityTotal;
         _charityTotal = 0;
         _sendValueOrRevert(charity, _c);
     }
-    //发奖给获奖者
+
     function getWinnerReward() external whenNotPaused {
         require(_winnerReward > 0);
         uint256 _r = _winnerReward;
@@ -280,7 +280,7 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
             }
         }
     }
-    //推广金额，自己领自己的
+
     function getReferrerReward() external whenNotPaused {
         require((GameStatus.Completed == _gameStatus || GameStatus.Closed == _gameStatus), "E1");
         require(_referrerReward > 0, "E2");
@@ -290,7 +290,7 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
         referrers[msg.sender] = 0;
         _sendValueOrRevert(msg.sender, _r);
     }
-    // 退款失败后，需玩家调用该函数退款
+
     function getRefund() external whenNotPaused {
         require(GameStatus.Canceled == _gameStatus, "E1");
         require(_joinTotal > 0, "E2");
@@ -319,7 +319,7 @@ contract HeroV1Game is AccessControl, Pausable, ReentrancyGuard {
             require(msg.value >= amount);
             return msg.value;
         }
-    } 
+    }
 
     function _sendValueOrRevert(address to, uint256 amount) internal {
         if (address(0) != token) {
