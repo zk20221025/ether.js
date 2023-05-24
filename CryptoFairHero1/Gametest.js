@@ -162,21 +162,21 @@ const main = async () => {
         console.log(`交易详情：10`)
         console.log(tx10)
     } else {
-        let tx20 = await gameContract4.joinGame(ethers.parseEther('0.01'))
+        let tx20 = await gameContract5.joinGame(ethers.parseEther('0.01'))
         await tx20.wait()
         console.log(`交易详情：20`)
         console.log(tx20)
     }
 
-    let tx14 = await gameContract5.drawGame()
+    let tx14 = await gameContract.drawGame()
     await tx14.wait()
     console.log(`交易详情：14`)
     console.log(tx14)
 
-    const winner = await gameContract5.winner()
+    const winner = await gameContract2.winner()
     console.log(`赢家: ${winner}`)
 
-    let tx11 = await gameContract.completeGame()
+    let tx11 = await gameContract3.completeGame()
     await tx11.wait()
     console.log(`交易详情：11`)
     console.log(tx11)
