@@ -132,7 +132,7 @@ await tx14.wait()
 console.log(`交易详情：14`)
 console.log(tx14)
 
-const winner = await gameContract.winner()
+const winner = await gameContract2.winner()
 console.log(`赢家: ${winner}`)
 
 let tx11 = await gameContract.completeGame()
