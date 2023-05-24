@@ -28,7 +28,7 @@ const minJoinAmount = ethers.parseEther("0.01") // 最小加入_amount
 const minPlayers = 2 // 最小玩家数
 const guarantee = ethers.parseEther("0.01") // 保证金
 const charityAddress = '0xd24eceF3AA9257383BD3341e63F6Cd73951186dF' // 慈善机构地址
-const tokenAddress = '0x0000000000000000000000000000000000000000' // 代币地址
+const tokenAddress = ethers.ZeroAddress // 代币地址
 const charityPercentage = 1 // 慈善比例
 const referrPercentage = 1 // 推荐人比例
 const drawingRewardPercentage = 50 // 抽奖奖励比例
@@ -71,7 +71,7 @@ console.log(tx3)
 
 let gameContract2 = new ethers.Contract(newGame, abiGame, wallet2)
 if (gameToken == ethers.ZeroAddress) {
-let tx4 = await gameContract2.joinGame(ethers.parseEther("0.01"),'0x0000000000000000000000000000000000000000',{value: ethers.parseEther("0.01")})
+let tx4 = await gameContract2.joinGame(ethers.parseEther("0.01"),ethers.ZeroAddress,{value: ethers.parseEther("0.01")})
 await tx4.wait()
 console.log(`交易详情：4`)
 console.log(tx4)
@@ -86,7 +86,7 @@ console.log(tx5)
 
 let gameContract3 = new ethers.Contract(newGame, abiGame, wallet3)
 if (gameToken == ethers.ZeroAddress) {
-let tx6 = await gameContract3.joinGame(ethers.parseEther("0.01"),'0x0000000000000000000000000000000000000000',{value: ethers.parseEther("0.01")})
+let tx6 = await gameContract3.joinGame(ethers.parseEther("0.01"),ethers.ZeroAddress,{value: ethers.parseEther("0.01")})
 await tx6.wait()
 console.log(`交易详情：6`)
 console.log(tx6)
@@ -101,7 +101,7 @@ console.log(tx7)
 
 let gameContract4 = new ethers.Contract(newGame, abiGame, wallet4)
 if (gameToken == ethers.ZeroAddress) {
-let tx8 = await gameContract4.joinGame(ethers.parseEther("0.01"),'0x0000000000000000000000000000000000000000',{value: ethers.parseEther("0.01")})
+let tx8 = await gameContract4.joinGame(ethers.parseEther("0.01"),ethers.ZeroAddress,{value: ethers.parseEther("0.01")})
 await tx8.wait()
 console.log(`交易详情：8`)
 console.log(tx8)
@@ -114,7 +114,7 @@ console.log(tx9)
 
 let gameContract5 = new ethers.Contract(newGame, abiGame, wallet5)
 if (gameToken == ethers.ZeroAddress) {
-let tx10 = await gameContract5.joinGame(ethers.parseEther("0.01"),'0x0000000000000000000000000000000000000000',{value: ethers.parseEther("0.01")})
+let tx10 = await gameContract5.joinGame(ethers.parseEther("0.01"),ethers.ZeroAddress,{value: ethers.parseEther("0.01")})
 await tx10.wait()
 console.log(`交易详情：10`)
 console.log(tx10)
@@ -131,17 +131,17 @@ await tx14.wait()
 console.log(`交易详情：14`)
 console.log(tx14)
 
-let tx11 = await gameContract2.completeGame()
+let tx11 = await gameContract.completeGame()
 await tx11.wait()
 console.log(`交易详情：11`)
 console.log(tx11)
 
-let tx12 = await gameContract2.getCharity()
+let tx12 = await gameContract.getCharity()
 await tx12.wait()
 console.log(`交易详情：12`)
 console.log(tx12)
 
-let tx13 = await gameContract2.getWinnerReward()
+let tx13 = await gameContract.getWinnerReward()
 await tx13.wait()
 console.log(`交易详情：13`)
 console.log(tx13)
