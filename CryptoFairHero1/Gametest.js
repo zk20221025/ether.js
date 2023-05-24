@@ -1,4 +1,4 @@
-import {ethers} from 'ethers'
+import {ethers} from 'ethers';
 
 const INFURA_SEPOLIA_URL =
 'https://sepolia.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82'
@@ -131,6 +131,10 @@ await tx14.wait()
 console.log(`交易详情：14`)
 console.log(tx14)
 
+const winner = await gameContract.winner()
+console.log(`赢家: ${winner}`)
+
+
 let tx11 = await gameContract.completeGame()
 await tx11.wait()
 console.log(`交易详情：11`)
@@ -141,11 +145,10 @@ await tx12.wait()
 console.log(`交易详情：12`)
 console.log(tx12)
 
+
 let tx13 = await gameContract.getWinnerReward()
 await tx13.wait()
 console.log(`交易详情：13`)
 console.log(tx13)
-
-
 
 
