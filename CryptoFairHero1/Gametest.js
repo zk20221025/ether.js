@@ -168,12 +168,12 @@ const main = async () => {
         console.log(tx20)
     }
 
-    let tx14 = await gameContract2.drawGame()
+    let tx14 = await gameContract5.drawGame()
     await tx14.wait()
     console.log(`交易详情：14`)
     console.log(tx14)
 
-    const winner = await gameContract2.winner()
+    const winner = await gameContract5.winner()
     console.log(`赢家: ${winner}`)
 
     let tx11 = await gameContract.completeGame()
