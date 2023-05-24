@@ -29,9 +29,9 @@ const minPlayers = 2 // 最小玩家数
 const guarantee = ethers.parseEther("0.01") // 保证金
 const charityAddress = '0xd24eceF3AA9257383BD3341e63F6Cd73951186dF' // 慈善机构地址
 const tokenAddress = ethers.ZeroAddress // 代币地址
-const charityPercentage = 1 // 慈善比例
+const charityPercentage = 44 // 慈善比例
 const referrPercentage = 1 // 推荐人比例
-const drawingRewardPercentage = 50 // 抽奖奖励比例
+const drawingRewardPercentage = 5 // 抽奖奖励比例
 
 let factoryContract = new ethers.Contract(factoryAddress,abiFactory,wallet1)
 let tx = await factoryContract.newGame(
@@ -52,6 +52,8 @@ const contractGame = new ethers.Contract(newGame, abiGame, wallet1)
 const gameToken = await contractGame.token()
 const gameInfo = await contractGame.gameInfo()
 const gameStatus = await contractGame.getGameStatus()
+console.log(`游戏: ${newGame}`)
+console.log(`gameInfo: ${gameInfo}`)
 
 let gameContract = new ethers.Contract(newGame, abiGame, wallet1)
 
@@ -125,7 +127,6 @@ console.log(`交易详情：20`)
 console.log(tx20)
 }
 
-
 let tx14 = await gameContract2.drawGame()
 await tx14.wait()
 console.log(`交易详情：14`)
@@ -133,7 +134,6 @@ console.log(tx14)
 
 const winner = await gameContract.winner()
 console.log(`赢家: ${winner}`)
-
 
 let tx11 = await gameContract.completeGame()
 await tx11.wait()
