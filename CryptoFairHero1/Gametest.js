@@ -115,3 +115,22 @@ let tx10 = await gameContract2.drawGame()
 await tx10.wait()
 console.log(`交易详情：10`)
 console.log(tx10)
+
+let tx11 = await gameContract2.completeGame()
+await tx11.wait()
+console.log(`交易详情：11`)
+console.log(tx11)
+
+let tx12 = await gameContract2.getCharity()
+await tx12.wait()
+console.log(`交易详情：12`)
+console.log(tx12)
+
+let tx13 = await gameContract2.getWinnerReward()
+await tx13.wait()
+console.log(`交易详情：13`)
+console.log(tx13)
+
+
+
+
