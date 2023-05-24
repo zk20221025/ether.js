@@ -199,17 +199,23 @@ const main = async () => {
     console.log(
         `钱包1: ${ethers.formatEther(await provider.getBalance(wallet1))} ETH`
     )
+    console.log(`wallet1地址: ${wallet1}`)
     console.log(
         `钱包2: ${ethers.formatEther(await provider.getBalance(wallet2))} ETH`
     )
+    console.log(`wallet1地址: ${wallet1}`)
     console.log(
         `钱包3: ${ethers.formatEther(await provider.getBalance(wallet3))} ETH`
     )
+    console.log(`wallet1地址: ${wallet1}`)
     console.log(
         `钱包4: ${ethers.formatEther(await provider.getBalance(wallet4))} ETH`
     )
+    console.log(`wallet1地址: ${wallet1}`)
     console.log(
         `钱包5: ${ethers.formatEther(await provider.getBalance(wallet5))} ETH`
     )
+    console.log(`wallet1地址: ${wallet1}`)
+
 }
 main()
