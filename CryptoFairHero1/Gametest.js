@@ -195,27 +195,34 @@ const main = async () => {
     console.log(`gameInfo: ${gameInfo}`)
     console.log(`赢家: ${winner}`)
 
+    const address1 = await wallet1.getAddress()
+    const address2 = await wallet2.getAddress() 
+    const address3 = await wallet3.getAddress()
+    const address4 = await wallet4.getAddress()
+    const address5 = await wallet5.getAddress()
+    console.log(`1. 获取钱包地址`);
+    console.log(`钱包1地址: ${address1}`);
+    console.log(`钱包2地址: ${address2}`);
+    console.log(`钱包3地址: ${address3}`);
+    console.log(`钱包4地址: ${address4}`);
+    console.log(`钱包5地址: ${address5}`);
+
     console.log(`ii. 发送后余额`)
     console.log(
         `钱包1: ${ethers.formatEther(await provider.getBalance(wallet1))} ETH`
     )
-    console.log(`wallet1地址: ${gameContract}`)
     console.log(
         `钱包2: ${ethers.formatEther(await provider.getBalance(wallet2))} ETH`
     )
-    console.log(`wallet1地址: ${gameContract2}`)
     console.log(
         `钱包3: ${ethers.formatEther(await provider.getBalance(wallet3))} ETH`
     )
-    console.log(`wallet1地址: ${gameContract3}`)
     console.log(
         `钱包4: ${ethers.formatEther(await provider.getBalance(wallet4))} ETH`
     )
-    console.log(`wallet1地址: ${gameContract4}`)
     console.log(
         `钱包5: ${ethers.formatEther(await provider.getBalance(wallet5))} ETH`
     )
-    console.log(`wallet1地址: ${gameContract5}`)
 
 }
 main()
