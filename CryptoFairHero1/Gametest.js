@@ -1,4 +1,4 @@
-import {ethers} from 'ethers'
+import {ethers} from 'ethers';
 
 const INFURA_SEPOLIA_URL =
     'https://sepolia.infura.io/v3/8280c1f722bf4d1ab88eb72177679d82'
@@ -77,6 +77,21 @@ const main = async () => {
     console.log(
         `钱包5: ${ethers.formatEther(await provider.getBalance(wallet5))} ETH`
     )
+        console.log(
+        `钱包6: ${ethers.formatEther(await provider.getBalance(wallet6))} ETH`
+    )
+    console.log(
+        `钱包7: ${ethers.formatEther(await provider.getBalance(wallet7))} ETH`
+    )
+    console.log(
+        `钱包8: ${ethers.formatEther(await provider.getBalance(wallet8))} ETH`
+    )
+    console.log(
+        `钱包9: ${ethers.formatEther(await provider.getBalance(wallet9))} ETH`
+    )
+    console.log(
+        `钱包10: ${ethers.formatEther(await provider.getBalance(wallet10))} ETH`
+    )
     let factoryContract = new ethers.Contract(
         factoryAddress,
         abiFactory,
@@ -106,23 +121,28 @@ const main = async () => {
 
     let gameContract = new ethers.Contract(newGame, abiGame, wallet1)
 
-    if (gameToken == ethers.ZeroAddress) {
+
         let tx2 = await gameContract.startGame({
             value: ethers.parseEther('0.01'),
         })
         await tx2.wait()
         console.log(`交易详情：2`)
         console.log(tx2)
-    } else {
-        let tx3 = await gameContract.startGame()
+
+    let gameContract2 = new ethers.Contract(newGame, abiGame, wallet2)
+
+        let tx3 = await gameContract2.joinGame(
+            ethers.parseEther('0.01'),
+            ethers.ZeroAddress,
+            {value: ethers.parseEther('0.01')}
+        )
         await tx3.wait()
         console.log(`交易详情：3`)
         console.log(tx3)
-    }
 
-    let gameContract2 = new ethers.Contract(newGame, abiGame, wallet2)
-    if (gameToken == ethers.ZeroAddress) {
-        let tx4 = await gameContract2.joinGame(
+    let gameContract3 = new ethers.Contract(newGame, abiGame, wallet3)
+
+        let tx4 = await gameContract3.joinGame(
             ethers.parseEther('0.01'),
             ethers.ZeroAddress,
             {value: ethers.parseEther('0.01')}
@@ -130,16 +150,22 @@ const main = async () => {
         await tx4.wait()
         console.log(`交易详情：4`)
         console.log(tx4)
-    } else {
-        let tx5 = await gameContract2.joinGame(ethers.parseEther('0.01'))
+
+    let gameContract4 = new ethers.Contract(newGame, abiGame, wallet4)
+
+        let tx5 = await gameContract4.joinGame(
+            ethers.parseEther('0.01'),
+            ethers.ZeroAddress,
+            {value: ethers.parseEther('0.01')}
+        )
         await tx5.wait()
         console.log(`交易详情：5`)
         console.log(tx5)
-    }
 
-    let gameContract3 = new ethers.Contract(newGame, abiGame, wallet3)
-    if (gameToken == ethers.ZeroAddress) {
-        let tx6 = await gameContract3.joinGame(
+
+    let gameContract5 = new ethers.Contract(newGame, abiGame, wallet5)
+
+        let tx6 = await gameContract5.joinGame(
             ethers.parseEther('0.01'),
             ethers.ZeroAddress,
             {value: ethers.parseEther('0.01')}
@@ -147,16 +173,23 @@ const main = async () => {
         await tx6.wait()
         console.log(`交易详情：6`)
         console.log(tx6)
-    } else {
-        let tx7 = await gameContract3.joinGame(ethers.parseEther('0.01'))
-        await tx7.wait()
-        console.log(`交易详情：7`)
-        console.log(tx7)
-    }
 
-    let gameContract4 = new ethers.Contract(newGame, abiGame, wallet4)
-    if (gameToken == ethers.ZeroAddress) {
-        let tx8 = await gameContract4.joinGame(
+
+    let gameContract6 = new ethers.Contract(newGame, abiGame, wallet6)
+
+        let tx7 = await gameContract6.joinGame(
+            ethers.parseEther('0.01'),
+            ethers.ZeroAddress,
+            {value: ethers.parseEther('0.01')}
+        )
+        await tx7.wait()
+        console.log(`交易详情：8`)
+        console.log(tx7)
+
+
+        let gameContract7 = new ethers.Contract(newGame, abiGame, wallet7)
+
+        let tx8 = await gameContract7.joinGame(
             ethers.parseEther('0.01'),
             ethers.ZeroAddress,
             {value: ethers.parseEther('0.01')}
@@ -164,16 +197,21 @@ const main = async () => {
         await tx8.wait()
         console.log(`交易详情：8`)
         console.log(tx8)
-    } else {
-        let tx9 = await gameContract4.joinGame(ethers.parseEther('0.01'))
+
+        let gameContract8 = new ethers.Contract(newGame, abiGame, wallet8)
+
+        let tx9 = await gameContract8.joinGame(
+            ethers.parseEther('0.01'),
+            ethers.ZeroAddress,
+            {value: ethers.parseEther('0.01')}
+        )
         await tx9.wait()
         console.log(`交易详情：9`)
         console.log(tx9)
-    }
 
-    let gameContract5 = new ethers.Contract(newGame, abiGame, wallet5)
-    if (gameToken == ethers.ZeroAddress) {
-        let tx10 = await gameContract5.joinGame(
+        let gameContract9 = new ethers.Contract(newGame, abiGame, wallet9)
+
+        let tx10 = await gameContract9.joinGame(
             ethers.parseEther('0.01'),
             ethers.ZeroAddress,
             {value: ethers.parseEther('0.01')}
@@ -181,12 +219,17 @@ const main = async () => {
         await tx10.wait()
         console.log(`交易详情：10`)
         console.log(tx10)
-    } else {
-        let tx20 = await gameContract5.joinGame(ethers.parseEther('0.01'))
-        await tx20.wait()
-        console.log(`交易详情：20`)
-        console.log(tx20)
-    }
+
+        let gameContract10 = new ethers.Contract(newGame, abiGame, wallet10)
+
+        let tx11 = await gameContract10.joinGame(
+            ethers.parseEther('0.01'),
+            ethers.ZeroAddress,
+            {value: ethers.parseEther('0.01')}
+        )
+        await tx11.wait()
+        console.log(`交易详情：11`)
+        console.log(tx11)
 
     let tx14 = await gameContract.drawGame()
     await tx14.wait()
@@ -196,10 +239,10 @@ const main = async () => {
     const winner = await gameContract2.winner()
     console.log(`赢家: ${winner}`)
 
-    let tx11 = await gameContract3.completeGame()
-    await tx11.wait()
-    console.log(`交易详情：11`)
-    console.log(tx11)
+    let tx15 = await gameContract3.completeGame()
+    await tx15.wait()
+    console.log(`交易详情：15`)
+    console.log(tx15)
 
     let tx12 = await gameContract.getCharity()
     await tx12.wait()
@@ -220,12 +263,22 @@ const main = async () => {
     const address3 = await wallet3.getAddress()
     const address4 = await wallet4.getAddress()
     const address5 = await wallet5.getAddress()
+    const address6 = await wallet6.getAddress()
+    const address7 = await wallet7.getAddress() 
+    const address8 = await wallet8.getAddress()
+    const address9 = await wallet9.getAddress()
+    const address10 = await wallet10.getAddress()
     console.log(`1. 获取钱包地址`);
     console.log(`钱包1地址: ${address1}`);
     console.log(`钱包2地址: ${address2}`);
     console.log(`钱包3地址: ${address3}`);
     console.log(`钱包4地址: ${address4}`);
     console.log(`钱包5地址: ${address5}`);
+    console.log(`钱包6地址: ${address6}`);
+    console.log(`钱包7地址: ${address7}`);
+    console.log(`钱包8地址: ${address8}`);
+    console.log(`钱包9地址: ${address9}`);
+    console.log(`钱包10地址: ${address10}`);
 
     console.log(`ii. 发送后余额`)
     console.log(
@@ -243,6 +296,20 @@ const main = async () => {
     console.log(
         `钱包5: ${ethers.formatEther(await provider.getBalance(wallet5))} ETH`
     )
-
+    console.log(
+        `钱包6: ${ethers.formatEther(await provider.getBalance(wallet6))} ETH`
+    )
+    console.log(
+        `钱包7: ${ethers.formatEther(await provider.getBalance(wallet7))} ETH`
+    )
+    console.log(
+        `钱包8: ${ethers.formatEther(await provider.getBalance(wallet8))} ETH`
+    )
+    console.log(
+        `钱包9: ${ethers.formatEther(await provider.getBalance(wallet9))} ETH`
+    )
+    console.log(
+        `钱包10: ${ethers.formatEther(await provider.getBalance(wallet10))} ETH`
+    )
 }
 main()
