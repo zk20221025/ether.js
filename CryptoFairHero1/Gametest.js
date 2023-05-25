@@ -236,6 +236,8 @@ const main = async () => {
     console.log(`交易详情：14`)
     console.log(tx14)
 
+    console.log(`游戏状态: ${gameStatus}`)
+
     let tx15 = await gameContract.completeGame()
     await tx15.wait()
     console.log(`交易详情：15`)
