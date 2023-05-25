@@ -59,7 +59,7 @@ const tokenAddress = ethers.ZeroAddress // 代币地址
 const charityPercentage = 44 // 慈善比例
 const referrPercentage = 1 // 推荐人比例
 const drawingRewardPercentage = 5 // 抽奖奖励比例
-
+const zeroAddress = '0x0000000000000000000000000000000000000000';
 const main = async () => {
     console.log(`i. 发送前余额`)
     console.log(
@@ -238,7 +238,7 @@ const main = async () => {
     
     const winner = await gameContract.winner()
     console.log(`赢家: ${winner}`)
-    if (address(0) != winner) {
+    if (zeroAddress != winner) {
         console.log('交易完成!');
     }
     else {
@@ -246,7 +246,10 @@ const main = async () => {
         await tx99.wait()
         console.log(`交易详情：99`)
         console.log(tx99)
+        const winner1 = await gameContract.winner()
+        console.log(`确认赢家: ${winner1}`)
     }
+
 
     let tx15 = await gameContract.completeGame()
     await tx15.wait()
