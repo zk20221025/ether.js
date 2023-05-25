@@ -183,7 +183,7 @@ const main = async () => {
             {value: ethers.parseEther('0.01')}
         )
         await tx7.wait()
-        console.log(`交易详情：8`)
+        console.log(`交易详情：7`)
         console.log(tx7)
 
 
@@ -236,13 +236,16 @@ const main = async () => {
     console.log(`交易详情：14`)
     console.log(tx14)
 
-    const winner = await gameContract2.winner()
+    const winner = await gameContract.winner()
     console.log(`赢家: ${winner}`)
 
-    let tx15 = await gameContract3.completeGame()
+    let tx15 = await gameContract.completeGame()
     await tx15.wait()
     console.log(`交易详情：15`)
     console.log(tx15)
+
+    const winner = await gameContract.winner()
+    console.log(`赢家: ${winner}`)
 
     let tx12 = await gameContract.getCharity()
     await tx12.wait()
