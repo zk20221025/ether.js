@@ -270,7 +270,8 @@ const main = async () => {
 
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
-    console.log(`赢家: ${winner}`)
+    const winner2 = await gameContract.winner()
+    console.log(`赢家: ${winner2}`)
 
     const address1 = await wallet1.getAddress()
     const address2 = await wallet2.getAddress() 
