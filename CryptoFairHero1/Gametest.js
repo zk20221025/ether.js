@@ -235,16 +235,25 @@ const main = async () => {
     await tx14.wait()
     console.log(`交易详情：14`)
     console.log(tx14)
-
-    console.log(`游戏状态: ${gameStatus}`)
+    
+    const winner = await gameContract.winner()
+    console.log(`赢家: ${winner}`)
+    if (winner = ethers.ZeroAddress) {
+        let tx99 = await gameContract.drawGame()
+        await tx99.wait()
+        console.log(`交易详情：99`)
+        console.log(tx99)
+    }
+    else {
+    console.log('交易完成!');
+    }
 
     let tx15 = await gameContract.completeGame()
     await tx15.wait()
     console.log(`交易详情：15`)
     console.log(tx15)
 
-    const winner = await gameContract.winner()
-    console.log(`赢家: ${winner}`)
+
 
     let tx12 = await gameContract.getCharity()
     await tx12.wait()
