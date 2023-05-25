@@ -238,7 +238,7 @@ const main = async () => {
     
     const winner = await gameContract.winner()
     console.log(`赢家: ${winner}`)
-    if (winner = ethers.ZeroAddress) {
+    if (ethers.ZeroAddress = winner) {
         let tx99 = await gameContract.drawGame()
         await tx99.wait()
         console.log(`交易详情：99`)
