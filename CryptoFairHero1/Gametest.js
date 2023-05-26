@@ -231,22 +231,22 @@ const main = async () => {
         console.log(`交易详情：11`)
         console.log(tx11)
 
-    let tx14 = await gameContract1.drawGame()
+    let tx14 = await gameContract.drawGame()
     await tx14.wait()
     console.log(`交易详情：14`)
     console.log(tx14)
     
-    const winner = await gameContract1.winner()
+    const winner = await gameContract.winner()
     console.log(`赢家: ${winner}`)
     if (zeroAddress != winner) {
         console.log('交易完成!');
     }
     else {
-        let tx99 = await gameContract1.drawGame()
+        let tx99 = await gameContract.drawGame()
         await tx99.wait()
         console.log(`交易详情：99`)
         console.log(tx99)
-        const winner1 = await gameContract1.winner()
+        const winner1 = await gameContract.winner()
         console.log(`确认赢家: ${winner1}`)
     }
 
