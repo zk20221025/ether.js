@@ -133,7 +133,7 @@ const main = async () => {
 
         let tx3 = await gameContract2.joinGame(
             ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
+            '0xE3E6c9354c291bEAdD26a2901025C2cc02C02567',
             {value: ethers.parseEther('0.005')}
         )
         await tx3.wait()
@@ -280,6 +280,11 @@ const main = async () => {
     await tx13.wait()
     console.log(`交易详情：13`)
     console.log(tx13)
+
+    let tx16 = await gameContract9.getReferrerReward()
+    await tx16.wait()
+    console.log(`交易详情：16`)
+    console.log(tx16)
 
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
