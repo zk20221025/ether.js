@@ -250,6 +250,18 @@ const main = async () => {
         console.log(`确认赢家: ${winner1}`)
     }
 
+        if (zeroAddress != winner1) {
+        console.log('交易确认完成!');
+    }
+    else {
+        let tx100 = await gameContract.drawGame()
+        await tx100.wait()
+        console.log(`交易详情：100`)
+        console.log(tx100)
+        const winner2 = await gameContract.winner()
+        console.log(`再次确认赢家: ${winner2}`)
+    }
+
 
     let tx15 = await gameContract.completeGame()
     await tx15.wait()
@@ -270,8 +282,8 @@ const main = async () => {
 
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
-    const winner2 = await gameContract.winner()
-    console.log(`赢家: ${winner2}`)
+    const winner3 = await gameContract.winner()
+    console.log(`赢家: ${winner3}`)
 
     const address1 = await wallet1.getAddress()
     const address2 = await wallet2.getAddress() 
