@@ -248,12 +248,10 @@ const main = async () => {
         console.log(tx99)
         const winner1 = await gameContract.winner()
         console.log(`确认赢家: ${winner1}`)
-    }
-
         if (zeroAddress != winner1) {
         console.log('交易确认完成!');
     }
-    else {
+        else {
         let tx100 = await gameContract.drawGame()
         await tx100.wait()
         console.log(`交易详情：100`)
@@ -261,6 +259,9 @@ const main = async () => {
         const winner2 = await gameContract.winner()
         console.log(`再次确认赢家: ${winner2}`)
     }
+    }
+
+
 
 
     let tx15 = await gameContract.completeGame()
