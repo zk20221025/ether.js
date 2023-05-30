@@ -231,7 +231,7 @@ const main = async () => {
         console.log(`交易详情：11`)
         console.log(tx11)
 
-    let tx14 = await gameContract.drawGame()
+    let tx14 = await gameContract10.drawGame()
     await tx14.wait()
     console.log(`交易详情：14`)
     console.log(tx14)
@@ -242,7 +242,7 @@ const main = async () => {
         console.log('交易完成!');
     }
     else {
-        let tx99 = await gameContract.drawGame()
+        let tx99 = await gameContract9.drawGame()
         await tx99.wait()
         console.log(`交易详情：99`)
         console.log(tx99)
@@ -252,7 +252,7 @@ const main = async () => {
         console.log('交易确认完成!');
     }
         else {
-        let tx100 = await gameContract.drawGame()
+        let tx100 = await gameContract8.drawGame()
         await tx100.wait()
         console.log(`交易详情：100`)
         console.log(tx100)
