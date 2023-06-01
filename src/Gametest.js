@@ -82,6 +82,23 @@ const main = async () => {
         console.log(`交易详情：2`)
         console.log(tx2)
 
+for (let i = 0; i < wallets.length; i++) {
+  const wallet = wallets[i];
+  const gameContract = new ethers.Contract(newGame, abiGame, wallet);
+  try {
+    const tx = await gameContract.joinGame(
+        ethers.parseEther('0.005'),
+        ethers.ZeroAddress,
+        {value: ethers.parseEther('0.005')}
+    )
+    await tx.wait();
+    console.log(`交易详情：${i}`);
+    console.log(tx);
+  } catch (error) {
+    console.log(`执行joinGame函数时出错：${error}`);
+  }
+}
+
     let gameContract2 = new ethers.Contract(newGame, abiGame, wallet2)
 
         let tx3 = await gameContract2.joinGame(
