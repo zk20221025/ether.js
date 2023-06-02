@@ -131,19 +131,19 @@ let tx1 = await gameContract.drawGame()
 
     let tx15 = await gameContract.completeGame()
     await tx15.wait()
-    console.log(`交易详情：15`)
+    console.log(`交易详情：completeGame`)
     console.log(tx15)
 
 
 
     let tx12 = await gameContract.getCharity()
     await tx12.wait()
-    console.log(`交易详情：12`)
+    console.log(`交易详情：getCharity`)
     console.log(tx12)
 
     let tx13 = await gameContract.getWinnerReward()
     await tx13.wait()
-    console.log(`交易详情：13`)
+    console.log(`交易详情：getWinnerReward`)
     console.log(tx13)
 
     console.log(`游戏: ${newGame}`)
