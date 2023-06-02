@@ -18,11 +18,6 @@ const privateKeys = [
 ];
 
 const wallets = privateKeys.map(privateKey => new ethers.Wallet(privateKey, provider));
-console.log(`i. 发送前各个钱包余额`)
-wallets.forEach(async wallet => {
-  const balance = await provider.getBalance(wallet.address);
-  console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`);
-});
 
 const abiFactory =
     '[ { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": false, "internalType": "address", "name": "previousAdmin", "type": "address" }, { "indexed": false, "internalType": "address", "name": "newAdmin", "type": "address" } ], "name": "AdminChanged", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "beacon", "type": "address" } ], "name": "BeaconUpgraded", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "game", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "id", "type": "uint256" } ], "name": "GameCreated", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "game", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "id", "type": "uint256" } ], "name": "GamePaused", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "game", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "id", "type": "uint256" } ], "name": "GameUnpaused", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "internalType": "uint8", "name": "version", "type": "uint8" } ], "name": "Initialized", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "internalType": "address", "name": "account", "type": "address" } ], "name": "Paused", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "indexed": true, "internalType": "bytes32", "name": "previousAdminRole", "type": "bytes32" }, { "indexed": true, "internalType": "bytes32", "name": "newAdminRole", "type": "bytes32" } ], "name": "RoleAdminChanged", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "indexed": true, "internalType": "address", "name": "account", "type": "address" }, { "indexed": true, "internalType": "address", "name": "sender", "type": "address" } ], "name": "RoleGranted", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "indexed": true, "internalType": "address", "name": "account", "type": "address" }, { "indexed": true, "internalType": "address", "name": "sender", "type": "address" } ], "name": "RoleRevoked", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "internalType": "address", "name": "account", "type": "address" } ], "name": "Unpaused", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "implementation", "type": "address" } ], "name": "Upgraded", "type": "event" }, { "inputs": [], "name": "DEFAULT_ADMIN_ROLE", "outputs": [ { "internalType": "bytes32", "name": "", "type": "bytes32" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "PAUSER_ROLE", "outputs": [ { "internalType": "bytes32", "name": "", "type": "bytes32" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "UPGRADER_ROLE", "outputs": [ { "internalType": "bytes32", "name": "", "type": "bytes32" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "currentGameId", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "name": "games", "outputs": [ { "internalType": "address", "name": "", "type": "address" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "bytes32", "name": "role", "type": "bytes32" } ], "name": "getRoleAdmin", "outputs": [ { "internalType": "bytes32", "name": "", "type": "bytes32" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" } ], "name": "grantRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" } ], "name": "hasRole", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "initialize", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "_minJoinAmount", "type": "uint256" }, { "internalType": "uint256", "name": "_minPlayers", "type": "uint256" }, { "internalType": "uint256", "name": "_guarantee", "type": "uint256" }, { "internalType": "address", "name": "_charityAddress", "type": "address" }, { "internalType": "address", "name": "_token", "type": "address" }, { "internalType": "uint8", "name": "_charityPercentage", "type": "uint8" }, { "internalType": "uint8", "name": "_referrPercentage", "type": "uint8" }, { "internalType": "uint8", "name": "_drawingRewardPercentage", "type": "uint8" } ], "name": "newGame", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "pause", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "gameId", "type": "uint256" } ], "name": "pauseGame", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "paused", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "proxiableUUID", "outputs": [ { "internalType": "bytes32", "name": "", "type": "bytes32" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" } ], "name": "renounceRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" } ], "name": "revokeRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" } ], "name": "supportsInterface", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "unpause", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "gameId", "type": "uint256" } ], "name": "unpauseGame", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "newImplementation", "type": "address" } ], "name": "upgradeTo", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "newImplementation", "type": "address" }, { "internalType": "bytes", "name": "data", "type": "bytes" } ], "name": "upgradeToAndCall", "outputs": [], "stateMutability": "payable", "type": "function" } ]'
@@ -41,13 +36,17 @@ const referrPercentage = 10 // 推荐人比例
 const drawingRewardPercentage = 10 // 抽奖奖励比例
 const zeroAddress = '0x0000000000000000000000000000000000000000';
 const main = async () => {
-    console.log(`i. 发送前余额`)
-
+console.log(`i. 发送前各个钱包余额`)
+for (let i = 0; i < wallets.length; i++) {
+  const wallet = wallets[i];
+  const balance = await provider.getBalance(wallet.address);
+  console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`);
+}
 
     let factoryContract = new ethers.Contract(
         factoryAddress,
         abiFactory,
-        wallet1
+        wallets[0]
     )
     let tx = await factoryContract.newGame(
         minJoinAmount,
@@ -64,14 +63,14 @@ const main = async () => {
     console.log(tx)
     let gameId = await factoryContract.currentGameId()
     let newGame = await factoryContract.games(gameId)
-    const contractGame = new ethers.Contract(newGame, abiGame, wallet1)
+    const contractGame = new ethers.Contract(newGame, abiGame, wallets[0])
     const gameToken = await contractGame.token()
     const gameInfo = await contractGame.gameInfo()
     const gameStatus = await contractGame.getGameStatus()
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
 
-    let gameContract = new ethers.Contract(newGame, abiGame, wallet1)
+    let gameContract = new ethers.Contract(newGame, abiGame, wallets[0])
 
 
         let tx2 = await gameContract.startGame({
@@ -97,113 +96,10 @@ for (let i = 0; i < wallets.length; i++) {
     console.log(`执行joinGame函数时出错：${error}`);
   }
 }
-
-    let gameContract2 = new ethers.Contract(newGame, abiGame, wallet2)
-
-        let tx3 = await gameContract2.joinGame(
-            ethers.parseEther('0.005'),
-            '0xE3E6c9354c291bEAdD26a2901025C2cc02C02567',
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx3.wait()
-        console.log(`交易详情：3`)
-        console.log(tx3)
-
-    let gameContract3 = new ethers.Contract(newGame, abiGame, wallet3)
-
-        let tx4 = await gameContract3.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx4.wait()
-        console.log(`交易详情：4`)
-        console.log(tx4)
-
-    let gameContract4 = new ethers.Contract(newGame, abiGame, wallet4)
-
-        let tx5 = await gameContract4.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx5.wait()
-        console.log(`交易详情：5`)
-        console.log(tx5)
-
-
-    let gameContract5 = new ethers.Contract(newGame, abiGame, wallet5)
-
-        let tx6 = await gameContract5.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx6.wait()
-        console.log(`交易详情：6`)
-        console.log(tx6)
-
-
-    let gameContract6 = new ethers.Contract(newGame, abiGame, wallet6)
-
-        let tx7 = await gameContract6.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx7.wait()
-        console.log(`交易详情：7`)
-        console.log(tx7)
-
-
-        let gameContract7 = new ethers.Contract(newGame, abiGame, wallet7)
-
-        let tx8 = await gameContract7.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx8.wait()
-        console.log(`交易详情：8`)
-        console.log(tx8)
-
-        let gameContract8 = new ethers.Contract(newGame, abiGame, wallet8)
-
-        let tx9 = await gameContract8.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx9.wait()
-        console.log(`交易详情：9`)
-        console.log(tx9)
-
-        let gameContract9 = new ethers.Contract(newGame, abiGame, wallet9)
-
-        let tx10 = await gameContract9.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx10.wait()
-        console.log(`交易详情：10`)
-        console.log(tx10)
-
-        let gameContract10 = new ethers.Contract(newGame, abiGame, wallet10)
-
-        let tx11 = await gameContract10.joinGame(
-            ethers.parseEther('0.005'),
-            ethers.ZeroAddress,
-            {value: ethers.parseEther('0.005')}
-        )
-        await tx11.wait()
-        console.log(`交易详情：11`)
-        console.log(tx11)
-
-    let tx14 = await gameContract10.drawGame()
-    await tx14.wait()
-    console.log(`交易详情：14`)
-    console.log(tx14)
+let tx1 = await gameContract.drawGame()
+    await tx1.wait()
+    console.log(`交易详情：开奖`)
+    console.log(tx1)
     
     const winner = await gameContract.winner()
     console.log(`赢家: ${winner}`)
@@ -211,7 +107,7 @@ for (let i = 0; i < wallets.length; i++) {
         console.log('交易完成!');
     }
     else {
-        let tx99 = await gameContract9.drawGame()
+        let tx99 = await gameContract.drawGame()
         await tx99.wait()
         console.log(`交易详情：99`)
         console.log(tx99)
@@ -221,7 +117,7 @@ for (let i = 0; i < wallets.length; i++) {
         console.log('交易确认完成!');
     }
         else {
-        let tx100 = await gameContract8.drawGame()
+        let tx100 = await gameContract.drawGame()
         await tx100.wait()
         console.log(`交易详情：100`)
         console.log(tx100)
@@ -250,20 +146,16 @@ for (let i = 0; i < wallets.length; i++) {
     console.log(`交易详情：13`)
     console.log(tx13)
 
-    let tx16 = await gameContract9.getReferrerReward()
-    await tx16.wait()
-    console.log(`交易详情：16`)
-    console.log(tx16)
-
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
     const winner3 = await gameContract.winner()
     console.log(`赢家: ${winner3}`)
-
-console.log(`i. 发送前各个钱包余额`)
-wallets.forEach(async wallet => {
+    console.log(`i. 发送后各个钱包余额`)
+for (let i = 0; i < wallets.length; i++) {
+  const wallet = wallets[i];
   const balance = await provider.getBalance(wallet.address);
   console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`);
-});
+}
+
 }
 main()
