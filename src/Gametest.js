@@ -96,7 +96,7 @@ for (var i = 0; i < testCase.length; i++) {
     const gameContract = new ethers.Contract(newGame, abiGame, wallets[0])
 
     const tx2 = await gameContract.startGame({
-        value: ethers.parseEther('0.005'),
+        value: guarantee,
     })
     await tx2.wait()
     console.log(`交易详情：2`)
