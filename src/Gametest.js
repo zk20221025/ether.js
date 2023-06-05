@@ -40,15 +40,15 @@ let testCase = [
 ]
 const main = async () => {
 for (var i = 0; i < testCase.length; i++) {
-    let case = testCase[i]
-    let charityAddress = case[0]
-    let guarantee = ethers.parseEther(case[1])
-    let tokenAddress = case[2]
-    let minJoinAmount = ethers.parseEther(case[3])
-    let minPlayers = case[4]
-    let charityPercentage = case[5]
-    let referrPercentage = case[6]
-    let drawingRewardPercentage = case[7]
+    let test = testCase[i]
+    let charityAddress = test[0]
+    let guarantee = ethers.parseEther(test[1])
+    let tokenAddress = test[2]
+    let minJoinAmount = ethers.parseEther(test[3])
+    let minPlayers = test[4]
+    let charityPercentage = test[5]
+    let referrPercentage = test[6]
+    let drawingRewardPercentage = test[7]
 
 
     const players = []
