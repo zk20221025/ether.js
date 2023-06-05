@@ -38,7 +38,7 @@ let testCase = [
     ['0xbAA740937169387fcE3c59658b23199b65102D5a','0.03',ethers.ZeroAddress,'0.1',6,30,0,10,0.1*6*0.3,0.1*6*0.1],
     ['0x4aA738e75ca61716335A924f01141bF87C792647','0.05',ethers.ZeroAddress,'0.04',9,10,0,1,0.04*9*0.1,0.04*9*0.01],   
 ]
-
+const main = async () => {
 for (var i = 0; i < testCase.length; i++) {
     let case = testCase[i]
     let charityAddress = case[0]
@@ -167,3 +167,5 @@ for (var i = 0; i < testCase.length; i++) {
         console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`)
     }
 }
+}
+main()
