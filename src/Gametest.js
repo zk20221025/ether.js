@@ -57,6 +57,12 @@ for (var i = 0; i < testCase.length; i++) {
         players.push(wallets[randomIndex])
     }
 
+    for (let z = 0; z < players.length; z++) {
+        const wallet = players[z]
+        const balance = await provider.getBalance(wallet.address)
+        console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`)
+    }
+
     const randomIndex = Math.floor(Math.random() * players.length);
     const winner = players[randomIndex];
 
