@@ -30,15 +30,13 @@ const wallets = privateKeys.map(
     (privateKey) => new ethers.Wallet(privateKey, provider)
 )
 
-
-
 let testCase = [
-    // charityAddress，guarantee，tokenAddress，minJoinAmount，minPlayers，charityPercentage，drawingRewardPercentage，charity预期结果，draw预期结果
-    ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF','0.1',ethers.ZeroAddress,'0.01',5,10,10,0.01*5*0.1,0.01*5*0.1],
-    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78','0.01',ethers.ZeroAddress,'0.02',8,2,20,0.02*8*0.02,0.02*8*0.2],
-    ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A','0.3',ethers.ZeroAddress,'0.05',7,10,0,0.05*7*0.1,0],
-    ['0xbAA740937169387fcE3c59658b23199b65102D5a','0.03',ethers.ZeroAddress,'0.1',6,30,10,0.1*6*0.3,0.1*6*0.1],
-    ['0x4aA738e75ca61716335A924f01141bF87C792647','0.05',ethers.ZeroAddress,'0.04',9,10,1,0.04*9*0.1,0.04*9*0.01],   
+    // charityAddress，guarantee，tokenAddress，minJoinAmount，minPlayers，charityPercentage，referrPercentagedrawingRewardPercentage，charity预期结果，draw预期结果
+    ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF','0.1',ethers.ZeroAddress,'0.01',5,10,0,10,0.01*5*0.1,0.01*5*0.1],
+    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78','0.01',ethers.ZeroAddress,'0.02',8,2,0,20,0.02*8*0.02,0.02*8*0.2],
+    ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A','0.3',ethers.ZeroAddress,'0.05',7,10,0,0,0.05*7*0.1,0],
+    ['0xbAA740937169387fcE3c59658b23199b65102D5a','0.03',ethers.ZeroAddress,'0.1',6,30,0,10,0.1*6*0.3,0.1*6*0.1],
+    ['0x4aA738e75ca61716335A924f01141bF87C792647','0.05',ethers.ZeroAddress,'0.04',9,10,0,1,0.04*9*0.1,0.04*9*0.01],   
 ]
 
 for (var i = 0; i < testCase.length; i++) {
@@ -51,7 +49,8 @@ for (var i = 0; i < testCase.length; i++) {
     let minJoinAmount = test[3]
     let minPlayers = test[4]
     let charityPercentage = test[5]
-    let drawingRewardPercentage = test[6]
+    let referrPercentage = test[6]
+    let drawingRewardPercentage = test[7]
 }
 
 const main = async () => {
