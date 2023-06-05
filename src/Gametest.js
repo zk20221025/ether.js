@@ -107,9 +107,9 @@ for (var i = 0; i < testCase.length; i++) {
         const gameContract = new ethers.Contract(newGame, abiGame, wallet)
         try {
             const tx = await gameContract.joinGame(
-                ethers.parseEther('0.005'),
-                ethers.ZeroAddress,
-                {value: ethers.parseEther('0.005')}
+                minJoinAmount,
+                tokenAddress,
+                {value: minJoinAmount}
             )
             await tx.wait()
             console.log(`交易详情：${k}`)
