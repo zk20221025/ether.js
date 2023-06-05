@@ -24,7 +24,11 @@ const privateKeys = [
     '0x25eeb050f0cf7cd77c2122f24a904f517022d21d9ddfad006d1044f0a5339d37',
     '0x549d7e0bd45bfb8e2b5da6b15b413e4c55c2ea83ac5ee7ab7ba3cf7be26ad06c',
     '0x62e4c3c9e433016d5ea21765df1455fe5281d00738e2fb6093a206ff814c5e83',
-]
+];
+
+//首先，我们需要将游戏参与者的数量作为参数传递给游戏函数。然后，我们可以使用该参数来随机选择一个钱包并将其用于参与游戏。在达到参与者数量后，我们可以使用随机选择的钱包来执行抽奖操作。
+
+//以下是修改后的代码示例：
 
 const wallets = privateKeys.map(
     (privateKey) => new ethers.Wallet(privateKey, provider)
@@ -41,32 +45,31 @@ let testCase = [
 
 for (var i = 0; i < testCase.length; i++) {
     let test = testCase[i]
-    const randomIndex = Math.floor(Math.random() * privateKeys.length);
-    let wallet = wallets[randomIndex];
     let charityAddress = test[0]
-    let guarantee = test[1]
+    let guarantee = ethers.parseEther(test[1])
     let tokenAddress = test[2]
-    let minJoinAmount = test[3]
+    let minJoinAmount = ethers.parseEther(test[3])
     let minPlayers = test[4]
     let charityPercentage = test[5]
     let referrPercentage = test[6]
     let drawingRewardPercentage = test[7]
-}
+    let numPlayers = test[4]
 
-const main = async () => {
-    console.log(`i. 发送前各个钱包余额`)
-    for (let i = 0; i < wallets.length; i++) {
-        const wallet = wallets[i]
-        const balance = await provider.getBalance(wallet.address)
-        console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`)
+    const players = []
+    for (let j = 0; j < numPlayers; j++) {
+        const randomIndex = Math.floor(Math.random() * wallets.length);
+        players.push(wallets[randomIndex])
     }
 
-    let factoryContract = new ethers.Contract(
+    const randomIndex = Math.floor(Math.random() * players.length);
+    const winner = players[randomIndex];
+
+    const factoryContract = new ethers.Contract(
         factoryAddress,
         abiFactory,
         wallets[0]
     )
-    let tx = await factoryContract.newGame(
+    const tx = await factoryContract.newGame(
         minJoinAmount,
         minPlayers,
         guarantee,
@@ -79,8 +82,8 @@ const main = async () => {
     await tx.wait()
     console.log(`交易详情：`)
     console.log(tx)
-    let gameId = await factoryContract.currentGameId()
-    let newGame = await factoryContract.games(gameId)
+    const gameId = await factoryContract.currentGameId()
+    const newGame = await factoryContract.games(gameId)
     const contractGame = new ethers.Contract(newGame, abiGame, wallets[0])
     const gameToken = await contractGame.token()
     const gameInfo = await contractGame.gameInfo()
@@ -88,17 +91,17 @@ const main = async () => {
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
 
-    let gameContract = new ethers.Contract(newGame, abiGame, wallets[0])
+    const gameContract = new ethers.Contract(newGame, abiGame, wallets[0])
 
-    let tx2 = await gameContract.startGame({
+    const tx2 = await gameContract.startGame({
         value: ethers.parseEther('0.005'),
     })
     await tx2.wait()
     console.log(`交易详情：2`)
     console.log(tx2)
 
-    for (let i = 0; i < wallets.length; i++) {
-        const wallet = wallets[i]
+    for (let k = 0; k < players.length; k++) {
+        const wallet = players[k]
         const gameContract = new ethers.Contract(newGame, abiGame, wallet)
         try {
             const tx = await gameContract.joinGame(
@@ -107,32 +110,33 @@ const main = async () => {
                 {value: ethers.parseEther('0.005')}
             )
             await tx.wait()
-            console.log(`交易详情：${i}`)
+            console.log(`交易详情：${k}`)
             console.log(tx)
         } catch (error) {
             console.log(`执行joinGame函数时出错：${error}`)
         }
     }
-    let tx1 = await gameContract.drawGame()
+
+    const tx1 = await gameContract.drawGame({ from: winner.address })
     await tx1.wait()
     console.log(`交易详情：开奖`)
     console.log(tx1)
 
-    const winner = await gameContract.winner()
-    console.log(`赢家: ${winner}`)
-    if (ZeroAddress != winner) {
+    const winnerAddress = await gameContract.winner()
+    console.log(`赢家: ${winnerAddress}`)
+    if (ethers.constants.AddressZero != winnerAddress) {
         console.log('交易完成!')
     } else {
-        let tx99 = await gameContract.drawGame()
+        const tx99 = await gameContract.drawGame({ from: winner.address })
         await tx99.wait()
         console.log(`交易详情：99`)
         console.log(tx99)
         const winner1 = await gameContract.winner()
         console.log(`确认赢家: ${winner1}`)
-        if (ZeroAddress != winner1) {
+        if (ethers.constants.AddressZero != winner1) {
             console.log('交易确认完成!')
         } else {
-            let tx100 = await gameContract.drawGame()
+            const tx100 = await gameContract.drawGame({ from: winner.address })
             await tx100.wait()
             console.log(`交易详情：100`)
             console.log(tx100)
@@ -141,17 +145,17 @@ const main = async () => {
         }
     }
 
-    let tx15 = await gameContract.completeGame()
+    const tx15 = await gameContract.completeGame()
     await tx15.wait()
     console.log(`交易详情：completeGame`)
     console.log(tx15)
 
-    let tx12 = await gameContract.getCharity()
+    const tx12 = await gameContract.getCharity()
     await tx12.wait()
     console.log(`交易详情：getCharity`)
     console.log(tx12)
 
-    let tx13 = await gameContract.getWinnerReward()
+    const tx13 = await gameContract.getWinnerReward()
     await tx13.wait()
     console.log(`交易详情：getWinnerReward`)
     console.log(tx13)
@@ -161,10 +165,11 @@ const main = async () => {
     const winner3 = await gameContract.winner()
     console.log(`赢家: ${winner3}`)
     console.log(`i. 发送后各个钱包余额`)
-    for (let i = 0; i < wallets.length; i++) {
-        const wallet = wallets[i]
+    for (let m = 0; m < wallets.length; m++) {
+        const wallet = wallets[m]
         const balance = await provider.getBalance(wallet.address)
         console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`)
     }
 }
-main()
+
+//在上述代码中，我们使用了一个名为“players”的数组来存储随机选择的参与者钱包。我们还使用了“winner”变量来存储随机选择的获胜者钱包。在循环中，我们使用“players”数组中的钱包来参与游戏，并在达到参与者数量后使用“winner”钱包来执行抽奖操作。请注意，我们还将“from”参数添加到“drawGame”函数中，以确保使用正确的钱包进行抽奖操作。
