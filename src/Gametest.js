@@ -32,10 +32,10 @@ const wallets = privateKeys.map(
 
 let testCase = [
     // charityAddress，guarantee，tokenAddress，minJoinAmount，minPlayers，charityPercentage，referrPercentagedrawingRewardPercentage，charity预期结果，draw预期结果
-    ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF',ethers.parseEther('0.1'),ethers.ZeroAddress,ethers.parseEther('0.01'),5,10,0,10,0.01*5*0.1,0.01*5*0.1],
-    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,2,0,20,0.02*8*0.02,0.02*8*0.2],
-    ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',ethers.parseEther('0.3'),ethers.ZeroAddress,ethers.parseEther('0.05'),7,10,0,0,0.05*7*0.1,0],
-    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.03'),ethers.ZeroAddress,ethers.parseEther('0.1'),6,30,0,10,0.1*6*0.3,0.1*6*0.1],
+    ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.01'),5,10,0,10,0.01*5*0.1,0.01*5*0.1],
+    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.02'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,2,0,20,0.02*8*0.02,0.02*8*0.2],
+    ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',ethers.parseEther('0.03'),ethers.ZeroAddress,ethers.parseEther('0.05'),7,10,0,0,0.05*7*0.1,0],
+    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.04'),ethers.ZeroAddress,ethers.parseEther('0.06'),6,30,0,10,0.06*6*0.3,0.1*6*0.1],
     ['0x4aA738e75ca61716335A924f01141bF87C792647',ethers.parseEther('0.05'),ethers.ZeroAddress,ethers.parseEther('0.04'),9,10,0,1,0.04*9*0.1,0.04*9*0.01],   
 ]
 const main = async () => {
@@ -129,7 +129,7 @@ for (var i = 0; i < testCase.length; i++) {
     if (ethers.ZeroAddress != winnerAddress) {
         console.log('交易完成!')
     } else {
-        const tx99 = await gameContract.drawGame({ from: winner.address })
+        const tx99 = await gameContract.drawGame()
         await tx99.wait()
         console.log(`交易详情：99`)
         console.log(tx99)
@@ -138,7 +138,7 @@ for (var i = 0; i < testCase.length; i++) {
         if (ethers.ZeroAddress != winner1) {
             console.log('交易确认完成!')
         } else {
-            const tx100 = await gameContract.drawGame({ from: winner.address })
+            const tx100 = await gameContract.drawGame()
             await tx100.wait()
             console.log(`交易详情：100`)
             console.log(tx100)
