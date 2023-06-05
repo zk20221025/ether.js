@@ -119,14 +119,14 @@ for (var i = 0; i < testCase.length; i++) {
         }
     }
 
-    const tx1 = await gameContract.drawGame({ from: winner.address })
+    const tx1 = await gameContract.drawGame()
     await tx1.wait()
     console.log(`交易详情：开奖`)
     console.log(tx1)
 
     const winnerAddress = await gameContract.winner()
     console.log(`赢家: ${winnerAddress}`)
-    if (ethers.constants.AddressZero != winnerAddress) {
+    if (zeroAddress != winnerAddress) {
         console.log('交易完成!')
     } else {
         const tx99 = await gameContract.drawGame({ from: winner.address })
@@ -135,7 +135,7 @@ for (var i = 0; i < testCase.length; i++) {
         console.log(tx99)
         const winner1 = await gameContract.winner()
         console.log(`确认赢家: ${winner1}`)
-        if (ethers.constants.AddressZero != winner1) {
+        if (zeroAddress != winner1) {
             console.log('交易确认完成!')
         } else {
             const tx100 = await gameContract.drawGame({ from: winner.address })
