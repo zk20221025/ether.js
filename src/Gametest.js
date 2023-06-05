@@ -26,10 +26,6 @@ const privateKeys = [
     '0x62e4c3c9e433016d5ea21765df1455fe5281d00738e2fb6093a206ff814c5e83',
 ];
 
-//首先，我们需要将游戏参与者的数量作为参数传递给游戏函数。然后，我们可以使用该参数来随机选择一个钱包并将其用于参与游戏。在达到参与者数量后，我们可以使用随机选择的钱包来执行抽奖操作。
-
-//以下是修改后的代码示例：
-
 const wallets = privateKeys.map(
     (privateKey) => new ethers.Wallet(privateKey, provider)
 )
@@ -44,19 +40,19 @@ let testCase = [
 ]
 
 for (var i = 0; i < testCase.length; i++) {
-    let test = testCase[i]
-    let charityAddress = test[0]
-    let guarantee = ethers.parseEther(test[1])
-    let tokenAddress = test[2]
-    let minJoinAmount = ethers.parseEther(test[3])
-    let minPlayers = test[4]
-    let charityPercentage = test[5]
-    let referrPercentage = test[6]
-    let drawingRewardPercentage = test[7]
-    let numPlayers = test[4]
+    let case = testCase[i]
+    let charityAddress = case[0]
+    let guarantee = ethers.parseEther(case[1])
+    let tokenAddress = case[2]
+    let minJoinAmount = ethers.parseEther(case[3])
+    let minPlayers = case[4]
+    let charityPercentage = case[5]
+    let referrPercentage = case[6]
+    let drawingRewardPercentage = case[7]
+
 
     const players = []
-    for (let j = 0; j < numPlayers; j++) {
+    for (let j = 0; j < minPlayers; j++) {
         const randomIndex = Math.floor(Math.random() * wallets.length);
         players.push(wallets[randomIndex])
     }
@@ -171,5 +167,3 @@ for (var i = 0; i < testCase.length; i++) {
         console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`)
     }
 }
-
-//在上述代码中，我们使用了一个名为“players”的数组来存储随机选择的参与者钱包。我们还使用了“winner”变量来存储随机选择的获胜者钱包。在循环中，我们使用“players”数组中的钱包来参与游戏，并在达到参与者数量后使用“winner”钱包来执行抽奖操作。请注意，我们还将“from”参数添加到“drawGame”函数中，以确保使用正确的钱包进行抽奖操作。
