@@ -126,7 +126,7 @@ for (var i = 0; i < testCase.length; i++) {
 
     const winnerAddress = await gameContract.winner()
     console.log(`赢家: ${winnerAddress}`)
-    if (zeroAddress != winnerAddress) {
+    if (ZeroAddress != winnerAddress) {
         console.log('交易完成!')
     } else {
         const tx99 = await gameContract.drawGame({ from: winner.address })
@@ -135,7 +135,7 @@ for (var i = 0; i < testCase.length; i++) {
         console.log(tx99)
         const winner1 = await gameContract.winner()
         console.log(`确认赢家: ${winner1}`)
-        if (zeroAddress != winner1) {
+        if (ZeroAddress != winner1) {
             console.log('交易确认完成!')
         } else {
             const tx100 = await gameContract.drawGame({ from: winner.address })
