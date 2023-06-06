@@ -169,13 +169,13 @@ for (var i = 0; i < testCase.length; i++) {
 const charityBalance = await provider.getBalance(charityAddress);
 const drawBalance = await provider.getBalance(wallets[0].address);
 
-if (ethers.formatEther(charityBalance).eq(charityExpectedBalance)) {
+if (ethers.formatEther(charityBalance) = (charityExpectedBalance)) {
   console.log(`Charity balance is correct: ${ethers.formatEther(charityBalance)}`);
 } else {
   console.log(`Charity balance is incorrect: ${ethers.formatEther(charityBalance)}, expected: ${charityExpectedBalance}`);
 }
 
-if (ethers.formatEther(drawBalance).eq(drawExpectedBalance)) {
+if (ethers.formatEther(drawBalance) = (drawExpectedBalance)) {
   console.log(`Draw balance is correct: ${ethers.formatEther(drawBalance)}`);
 } else {
   console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${drawExpectedBalance}`);
