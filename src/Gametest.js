@@ -35,8 +35,8 @@ let testCase = [
     ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.01'),5,10,0,10,0.01*5*0.1,0.01*5*0.1],
     ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.02'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,2,0,20,0.02*8*0.02,0.02*8*0.2],
     ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',ethers.parseEther('0.03'),ethers.ZeroAddress,ethers.parseEther('0.03'),7,10,0,0,0.03*7*0.1,0],
-    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.04'),ethers.ZeroAddress,ethers.parseEther('0.04'),6,30,0,10,0.04*6*0.3,0.1*6*0.1],
-    ['0x4aA738e75ca61716335A924f01141bF87C792647',ethers.parseEther('0.05'),ethers.ZeroAddress,ethers.parseEther('0.05'),9,10,0,1,0.05*9*0.1,0.04*9*0.01],   
+    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.04'),ethers.ZeroAddress,ethers.parseEther('0.04'),6,30,0,10,0.04*6*0.3,0.04*6*0.1],
+    ['0x4aA738e75ca61716335A924f01141bF87C792647',ethers.parseEther('0.05'),ethers.ZeroAddress,ethers.parseEther('0.05'),9,10,0,1,0.05*9*0.1,0.05*9*0.01],   
 ]
 const main = async () => {
 for (var i = 0; i < testCase.length; i++) {
@@ -56,7 +56,6 @@ const charityBalance1 = await provider.getBalance(charityAddress);
 console.log(`charityBalance1:${ethers.formatEther(charityBalance1)}`);
 const drawBalance1 = await provider.getBalance(wallets[0].address);
 console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
-
 
     const players = []
     for (let j = 0; j < minPlayers; j++) {
@@ -89,8 +88,8 @@ console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
         drawingRewardPercentage
     )
     await tx.wait()
-    console.log(`交易详情：`)
-    console.log(tx)
+    console.log(`newGame`)
+
     const gameId = await factoryContract.currentGameId()
     const newGame = await factoryContract.games(gameId)
     const contractGame = new ethers.Contract(newGame, abiGame, wallets[0])
@@ -108,7 +107,6 @@ console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
     await tx2.wait()
     console.log(`startGame`)
 
-
     for (let k = 0; k < players.length; k++) {
         const wallet = players[k]
         const gameContract = new ethers.Contract(newGame, abiGame, wallet)
@@ -123,8 +121,7 @@ console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
         } catch (error) {
             console.log(`执行joinGame函数时出错：${error}`)
         }
-    }
-    
+    }   
 
     const tx1 = await gameContract.drawGame()
     await tx1.wait()
@@ -161,6 +158,9 @@ console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
     await tx12.wait()
     console.log(`交易详情：getCharity`)
 
+    const tx13 = await gameContract.getWinnerReward()
+    await tx13.wait()
+    console.log(`交易详情：getWinnerReward`)
 
 const charityBalance = await provider.getBalance(charityAddress);
 const drawBalance = await provider.getBalance(wallets[0].address);
@@ -176,11 +176,6 @@ if (parseFloat(ethers.formatEther(drawBalance)) === (drawExpectedBalance + parse
 } else {
   console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${drawExpectedBalance + parseFloat(ethers.formatEther(drawBalance1))}`);
 }
-
-    const tx13 = await gameContract.getWinnerReward()
-    await tx13.wait()
-    console.log(`交易详情：getWinnerReward`)
-    console.log(tx13)
 
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
