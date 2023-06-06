@@ -31,7 +31,7 @@ const wallets = privateKeys.map(
 )
 
 let testCase = [
-    // charityAddress，guarantee，tokenAddress，minJoinAmount，minPlayers，charityPercentage，referrPercentagedrawingRewardPercentage，charity预期结果，draw预期结果
+    // charityAddress，guarantee，tokenAddress，minJoinAmount，minPlayers，charityPercentage，referrPercentage，drawingRewardPercentage，charity预期结果，draw预期结果
     ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.01'),5,10,0,10,0.01*5*0.1,0.01*5*0.1],
     ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.02'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,2,0,20,0.02*8*0.02,0.02*8*0.2],
     ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',ethers.parseEther('0.03'),ethers.ZeroAddress,ethers.parseEther('0.03'),7,10,0,0,0.03*7*0.1,0],
@@ -49,6 +49,8 @@ for (var i = 0; i < testCase.length; i++) {
     let charityPercentage = test[5]
     let referrPercentage = test[6]
     let drawingRewardPercentage = test[7]
+    const charityExpectedBalance = test[8]
+    const drawExpectedBalance = test[9]
 
 
     const players = []
@@ -118,6 +120,13 @@ for (var i = 0; i < testCase.length; i++) {
             console.log(`执行joinGame函数时出错：${error}`)
         }
     }
+        console.log(
+        `钱包5: ${ethers.formatEther(await provider.getBalance(charityAddress))} ETH`
+    )
+        console.log(
+        `钱包5: ${ethers.formatEther(await provider.getBalance(wallets[0].address))} ETH`
+    )
+    
 
     const tx1 = await gameContract.drawGame()
     await tx1.wait()
@@ -157,6 +166,21 @@ for (var i = 0; i < testCase.length; i++) {
     console.log(`交易详情：getCharity`)
     console.log(tx12)
 
+const charityBalance = await provider.getBalance(charityAddress);
+const drawBalance = await provider.getBalance(wallets[0].address);
+
+if (charityBalance.eq(charityExpectedBalance)) {
+  console.log(`Charity balance is correct: ${ethers.formatEther(charityBalance)}`);
+} else {
+  console.log(`Charity balance is incorrect: ${ethers.formatEther(charityBalance)}, expected: ${charityExpectedBalance}`);
+}
+
+if (drawBalance.eq(drawExpectedBalance)) {
+  console.log(`Draw balance is correct: ${ethers.formatEther(drawBalance)}`);
+} else {
+  console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${drawExpectedBalance}`);
+}
+
     const tx13 = await gameContract.getWinnerReward()
     await tx13.wait()
     console.log(`交易详情：getWinnerReward`)
@@ -166,12 +190,10 @@ for (var i = 0; i < testCase.length; i++) {
     console.log(`gameInfo: ${gameInfo}`)
     const winner3 = await gameContract.winner()
     console.log(`赢家: ${winner3}`)
-    console.log(`i. 发送后各个钱包余额`)
-    for (let m = 0; m < wallets.length; m++) {
-        const wallet = wallets[m]
-        const balance = await provider.getBalance(wallet.address)
-        console.log(`${wallet.address}: ${ethers.formatEther(balance)} ETH`)
-    }
+    gameContract.on('PrizeWithdrawn', (winnerAddress, amount, event) => {
+    console.log(`赢家地址: ${winnerAddress}`)
+    console.log(`增加的余额: ${ethers.formatEther(amount)} ETH`)
+    })
 }
 }
 main()
