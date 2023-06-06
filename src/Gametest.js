@@ -120,12 +120,8 @@ for (var i = 0; i < testCase.length; i++) {
             console.log(`执行joinGame函数时出错：${error}`)
         }
     }
-        console.log(
-        `钱包5: ${ethers.formatEther(await provider.getBalance(charityAddress))} ETH`
-    )
-        console.log(
-        `钱包5: ${ethers.formatEther(await provider.getBalance(wallets[0].address))} ETH`
-    )
+const charityBalance1 = await provider.getBalance(charityAddress);
+const drawBalance1 = await provider.getBalance(wallets[0].address);
     
 
     const tx1 = await gameContract.drawGame()
@@ -169,16 +165,16 @@ for (var i = 0; i < testCase.length; i++) {
 const charityBalance = await provider.getBalance(charityAddress);
 const drawBalance = await provider.getBalance(wallets[0].address);
 
-if (ethers.formatEther(charityBalance) == (charityExpectedBalance)) {
+if (ethers.formatEther(charityBalance) == (charityExpectedBalance + ethers.formatEther(charityBalance1))) {
   console.log(`Charity balance is correct: ${ethers.formatEther(charityBalance)}`);
 } else {
-  console.log(`Charity balance is incorrect: ${ethers.formatEther(charityBalance)}, expected: ${charityExpectedBalance}`);
+  console.log(`Charity balance is incorrect: ${ethers.formatEther(charityBalance)}, expected: ${charityExpectedBalance + ethers.formatEther(charityBalance1)}`);
 }
 
-if (ethers.formatEther(drawBalance) == (drawExpectedBalance)) {
+if (ethers.formatEther(drawBalance) == (drawExpectedBalance + ethers.formatEther(drawBalance1))) {
   console.log(`Draw balance is correct: ${ethers.formatEther(drawBalance)}`);
 } else {
-  console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${drawExpectedBalance}`);
+  console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${drawExpectedBalance + ethers.formatEther(drawBalance1)}`);
 }
 
     const tx13 = await gameContract.getWinnerReward()
@@ -190,10 +186,6 @@ if (ethers.formatEther(drawBalance) == (drawExpectedBalance)) {
     console.log(`gameInfo: ${gameInfo}`)
     const winner3 = await gameContract.winner()
     console.log(`赢家: ${winner3}`)
-    gameContract.on('PrizeWithdrawn', (winnerAddress, amount, event) => {
-    console.log(`赢家地址: ${winnerAddress}`)
-    console.log(`增加的余额: ${ethers.formatEther(amount)} ETH`)
-    })
 }
 }
 main()
