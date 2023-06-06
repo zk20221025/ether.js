@@ -53,7 +53,10 @@ for (var i = 0; i < testCase.length; i++) {
     const drawExpectedBalance = test[9]
 
 const charityBalance1 = await provider.getBalance(charityAddress);
+console.log(`charityBalance1:${ethers.formatEther(charityBalance1)}`);
 const drawBalance1 = await provider.getBalance(wallets[0].address);
+console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
+
 
     const players = []
     for (let j = 0; j < minPlayers; j++) {
@@ -103,8 +106,8 @@ const drawBalance1 = await provider.getBalance(wallets[0].address);
         value: guarantee,
     })
     await tx2.wait()
-    console.log(`交易详情：2`)
-    console.log(tx2)
+    console.log(`startGame`)
+
 
     for (let k = 0; k < players.length; k++) {
         const wallet = players[k]
@@ -117,7 +120,6 @@ const drawBalance1 = await provider.getBalance(wallets[0].address);
             )
             await tx.wait()
             console.log(`交易详情：${k}`)
-            console.log(tx)
         } catch (error) {
             console.log(`执行joinGame函数时出错：${error}`)
         }
@@ -127,7 +129,6 @@ const drawBalance1 = await provider.getBalance(wallets[0].address);
     const tx1 = await gameContract.drawGame()
     await tx1.wait()
     console.log(`交易详情：开奖`)
-    console.log(tx1)
 
     const winnerAddress = await gameContract.winner()
     console.log(`赢家: ${winnerAddress}`)
@@ -137,7 +138,7 @@ const drawBalance1 = await provider.getBalance(wallets[0].address);
         const tx99 = await gameContract.drawGame()
         await tx99.wait()
         console.log(`交易详情：99`)
-        console.log(tx99)
+
         const winner1 = await gameContract.winner()
         console.log(`确认赢家: ${winner1}`)
         if (ethers.ZeroAddress != winner1) {
@@ -146,7 +147,7 @@ const drawBalance1 = await provider.getBalance(wallets[0].address);
             const tx100 = await gameContract.drawGame()
             await tx100.wait()
             console.log(`交易详情：100`)
-            console.log(tx100)
+
             const winner2 = await gameContract.winner()
             console.log(`再次确认赢家: ${winner2}`)
         }
@@ -155,12 +156,11 @@ const drawBalance1 = await provider.getBalance(wallets[0].address);
     const tx15 = await gameContract.completeGame()
     await tx15.wait()
     console.log(`交易详情：completeGame`)
-    console.log(tx15)
 
     const tx12 = await gameContract.getCharity()
     await tx12.wait()
     console.log(`交易详情：getCharity`)
-    console.log(tx12)
+
 
 const charityBalance = await provider.getBalance(charityAddress);
 const drawBalance = await provider.getBalance(wallets[0].address);
