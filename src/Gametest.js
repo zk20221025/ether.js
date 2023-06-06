@@ -165,16 +165,16 @@ const drawBalance1 = await provider.getBalance(wallets[0].address);
 const charityBalance = await provider.getBalance(charityAddress);
 const drawBalance = await provider.getBalance(wallets[0].address);
 
-if (ethers.formatEther(charityBalance) == ((charityExpectedBalance + ethers.formatEther(charityBalance1)))) {
+if (parseFloat(ethers.formatEther(charityBalance)) == (charityExpectedBalance + parseFloat(ethers.formatEther(charityBalance1)))) {
   console.log(`Charity balance is correct: ${ethers.formatEther(charityBalance)}`);
 } else {
-  console.log(`Charity balance is incorrect: ${ethers.formatEther(charityBalance)}, expected: ${(charityExpectedBalance + ethers.formatEther(charityBalance1))}`);
+  console.log(`Charity balance is incorrect: ${ethers.formatEther(charityBalance)}, expected: ${charityExpectedBalance + parseFloat(ethers.formatEther(charityBalance1))}`);
 }
 
-if (ethers.formatEther(drawBalance) == ((drawExpectedBalance + ethers.formatEther(drawBalance1)))) {
+if (parseFloat(ethers.formatEther(drawBalance)) === (drawExpectedBalance + parseFloat(ethers.formatEther(drawBalance1)))) {
   console.log(`Draw balance is correct: ${ethers.formatEther(drawBalance)}`);
 } else {
-  console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${(drawExpectedBalance + ethers.formatEther(drawBalance1))}`);
+  console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${drawExpectedBalance + parseFloat(ethers.formatEther(drawBalance1))}`);
 }
 
     const tx13 = await gameContract.getWinnerReward()
