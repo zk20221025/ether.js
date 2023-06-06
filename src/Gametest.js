@@ -32,11 +32,11 @@ const wallets = privateKeys.map(
 
 let testCase = [
     // charityAddress，guarantee，tokenAddress，minJoinAmount，minPlayers，charityPercentage，referrPercentage，drawingRewardPercentage，charity预期结果，draw预期结果
-    ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.01'),5,10,0,10,0.01*5*0.1,0.01*5*0.1],
-    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.02'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,2,0,20,0.02*8*0.02,0.02*8*0.2],
-    ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',ethers.parseEther('0.03'),ethers.ZeroAddress,ethers.parseEther('0.03'),7,10,0,0,0.03*7*0.1,0],
-    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.04'),ethers.ZeroAddress,ethers.parseEther('0.04'),6,30,0,10,0.04*6*0.3,0.04*6*0.1],
-    ['0x4aA738e75ca61716335A924f01141bF87C792647',ethers.parseEther('0.05'),ethers.ZeroAddress,ethers.parseEther('0.05'),9,10,0,1,0.05*9*0.1,0.05*9*0.01],   
+    ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF',ethers.parseEther('0.05'),ethers.ZeroAddress,ethers.parseEther('0.01'),5,10,0,10,0.01*5*0.1,0.01*5*0.1],
+    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.04'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,5,0,20,0.02*8*0.05,0.02*8*0.2],
+    ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',ethers.parseEther('0.03'),ethers.ZeroAddress,ethers.parseEther('0.05'),7,20,0,0,0.05*7*0.2,0],
+    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.02'),ethers.ZeroAddress,ethers.parseEther('0.04'),6,30,0,10,0.04*6*0.3,0.04*6*0.1],
+    ['0x4aA738e75ca61716335A924f01141bF87C792647',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.03'),9,20,0,1,0.03*9*0.2,0.03*9*0.01],   
 ]
 const main = async () => {
 for (var i = 0; i < testCase.length; i++) {
