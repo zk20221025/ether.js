@@ -150,7 +150,7 @@ const main = async () => {
 
         const game1Contract = new ethers.Contract(newGame, abiGame, wallets[0])
 
-        const tx2 = await gameContract.startGame({
+        const tx2 = await game1Contract.startGame({
             value: guarantee,
         })
         await tx2.wait()
