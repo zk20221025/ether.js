@@ -52,8 +52,8 @@ for (var i = 0; i < testCase.length; i++) {
     const charityExpectedBalance = test[8]
     const drawExpectedBalance = test[9]
 
-    const charityBalance1 = await provider.getBalance(charityAddress);
-    console.log(`charityBalance1:${ethers.formatEther(charityBalance1)}`);
+const charityBalance1 = await provider.getBalance(charityAddress);
+console.log(`charityBalance1:${ethers.formatEther(charityBalance1)}`);
     const drawBalance1 = await provider.getBalance(wallets[0].address);
     console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
 
@@ -99,9 +99,9 @@ for (var i = 0; i < testCase.length; i++) {
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
 
-    const gameContract = new ethers.Contract(newGame, abiGame, wallets[0])
+    const game1Contract = new ethers.Contract(newGame, abiGame, wallets[0])
 
-    const tx2 = await gameContract.startGame({
+    const tx2 = await game1Contract.startGame({
         value: guarantee,
     })
     await tx2.wait()
@@ -125,7 +125,7 @@ for (var i = 0; i < testCase.length; i++) {
         }
     }   
 
-    const tx1 = await factoryContract.drawGame()
+    const tx1 = await game1Contract.drawGame()
     await tx1.wait()
     console.log(`交易详情：开奖`)
 
