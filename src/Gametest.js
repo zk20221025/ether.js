@@ -33,10 +33,10 @@ const wallets = privateKeys.map(
 let testCase = [
     // charityAddress，guarantee，tokenAddress，minJoinAmount，minPlayers，charityPercentage，referrPercentage，drawingRewardPercentage，charity预期结果，draw预期结果
     ['0xd24eceF3AA9257383BD3341e63F6Cd73951186dF',ethers.parseEther('0.05'),ethers.ZeroAddress,ethers.parseEther('0.01'),5,10,0,10,0.01*5*0.1,0.01*5*0.1],
-    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.04'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,5,0,20,0.02*8*0.05,0.02*8*0.2],
+    ['0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',ethers.parseEther('0.04'),ethers.ZeroAddress,ethers.parseEther('0.02'),8,20,0,20,0.02*8*0.2,0.02*8*0.2],
     ['0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',ethers.parseEther('0.03'),ethers.ZeroAddress,ethers.parseEther('0.05'),7,20,0,0,0.05*7*0.2,0],
-    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.02'),ethers.ZeroAddress,ethers.parseEther('0.04'),6,30,0,10,0.04*6*0.3,0.04*6*0.1],
-    ['0x4aA738e75ca61716335A924f01141bF87C792647',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.03'),9,20,0,1,0.03*9*0.2,0.03*9*0.01],   
+    ['0xbAA740937169387fcE3c59658b23199b65102D5a',ethers.parseEther('0.02'),ethers.ZeroAddress,ethers.parseEther('0.04'),6,50,0,10,0.04*6*0.5,0.04*6*0.1],
+    ['0x4aA738e75ca61716335A924f01141bF87C792647',ethers.parseEther('0.01'),ethers.ZeroAddress,ethers.parseEther('0.03'),9,40,0,15,0.03*9*0.4,0.03*9*0.15],   
 ]
 const main = async () => {
 for (var i = 0; i < testCase.length; i++) {
@@ -54,8 +54,7 @@ for (var i = 0; i < testCase.length; i++) {
 
 const charityBalance1 = await provider.getBalance(charityAddress);
 console.log(`charityBalance1:${ethers.formatEther(charityBalance1)}`);
-const drawBalance1 = await provider.getBalance(wallets[0].address);
-console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
+
 
     const players = []
     for (let j = 0; j < minPlayers; j++) {
@@ -106,6 +105,9 @@ console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
     })
     await tx2.wait()
     console.log(`startGame`)
+
+    const drawBalance1 = await provider.getBalance(wallets[0].address);
+    console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`);
 
     for (let k = 0; k < players.length; k++) {
         const wallet = players[k]
@@ -171,7 +173,7 @@ if (parseFloat(ethers.formatEther(charityBalance)) == (charityExpectedBalance + 
   console.log(`Charity balance is incorrect: ${ethers.formatEther(charityBalance)}, expected: ${charityExpectedBalance + parseFloat(ethers.formatEther(charityBalance1))}`);
 }
 
-if (parseFloat(ethers.formatEther(drawBalance)) === (drawExpectedBalance + parseFloat(ethers.formatEther(drawBalance1)))) {
+if (parseFloat(ethers.formatEther(drawBalance)) == (drawExpectedBalance + parseFloat(ethers.formatEther(drawBalance1)))) {
   console.log(`Draw balance is correct: ${ethers.formatEther(drawBalance)}`);
 } else {
   console.log(`Draw balance is incorrect: ${ethers.formatEther(drawBalance)}, expected: ${drawExpectedBalance + parseFloat(ethers.formatEther(drawBalance1))}`);
