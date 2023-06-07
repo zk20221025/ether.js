@@ -129,38 +129,38 @@ console.log(`charityBalance1:${ethers.formatEther(charityBalance1)}`);
     await tx1.wait()
     console.log(`交易详情：开奖`)
 
-    const winnerAddress = await gameContract.winner()
+    const winnerAddress = await game1Contract.winner()
     console.log(`赢家: ${winnerAddress}`)
     if (ethers.ZeroAddress != winnerAddress) {
         console.log('交易完成!')
     } else {
-        const tx99 = await gameContract.drawGame()
+        const tx99 = await game1Contract.drawGame()
         await tx99.wait()
         console.log(`交易详情：99`)
 
-        const winner1 = await gameContract.winner()
+        const winner1 = await game1Contract.winner()
         console.log(`确认赢家: ${winner1}`)
         if (ethers.ZeroAddress != winner1) {
             console.log('交易确认完成!')
         } else {
-            const tx100 = await gameContract.drawGame()
+            const tx100 = await game1Contract.drawGame()
             await tx100.wait()
             console.log(`交易详情：100`)
 
-            const winner2 = await gameContract.winner()
+            const winner2 = await game1Contract.winner()
             console.log(`再次确认赢家: ${winner2}`)
         }
     }
 
-    const tx15 = await gameContract.completeGame()
+    const tx15 = await game1Contract.completeGame()
     await tx15.wait()
     console.log(`交易详情：completeGame`)
 
-    const tx12 = await gameContract.getCharity()
+    const tx12 = await game1Contract.getCharity()
     await tx12.wait()
     console.log(`交易详情：getCharity`)
 
-    const tx13 = await gameContract.getWinnerReward()
+    const tx13 = await game1Contract.getWinnerReward()
     await tx13.wait()
     console.log(`交易详情：getWinnerReward`)
 
@@ -181,7 +181,7 @@ if (parseFloat(ethers.formatEther(drawBalance)) == (drawExpectedBalance + parseF
 
     console.log(`游戏: ${newGame}`)
     console.log(`gameInfo: ${gameInfo}`)
-    const winner3 = await gameContract.winner()
+    const winner3 = await game1Contract.winner()
     console.log(`赢家: ${winner3}`)
 }
 }
