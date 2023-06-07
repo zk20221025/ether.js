@@ -36,24 +36,24 @@ let testCase = [
         ethers.parseEther('0.05'),
         ethers.ZeroAddress,
         ethers.parseEther('0.01'),
-        11,
+        20,
         10,
         0,
         10,
-        0.01 * 11 * 0.1,
-        0.01 * 11 * 0.1,
+        0.01 * 20 * 0.1,
+        0.01 * 20 * 0.1,
     ],
     [
         '0x2b3A4b62790cFf087d41dD6B3A9514CC13aB1b78',
         ethers.parseEther('0.04'),
         ethers.ZeroAddress,
         ethers.parseEther('0.02'),
-        8,
+        11,
         20,
         0,
         20,
-        0.02 * 8 * 0.2,
-        0.02 * 8 * 0.2,
+        0.02 * 11 * 0.2,
+        0.02 * 11 * 0.2,
     ],
     [
         '0x34ABE182B89e4Fe88bD4F8f03573D6b177483c0A',
@@ -148,7 +148,7 @@ const main = async () => {
         console.log(`游戏: ${newGame}`)
         console.log(`gameInfo: ${gameInfo}`)
 
-        const gameContract = new ethers.Contract(newGame, abiGame, wallets[0])
+        const game1Contract = new ethers.Contract(newGame, abiGame, wallets[0])
 
         const tx2 = await gameContract.startGame({
             value: guarantee,
@@ -173,50 +173,50 @@ const main = async () => {
         }
         const charityBalance1 = await provider.getBalance(charityAddress)
         console.log(`charityBalance1:${ethers.formatEther(charityBalance1)}`)
-        const drawBalance1 = await provider.getBalance(wallets[0].address)
+        const drawBalance1 = await provider.getBalance('0xd24eceF3AA9257383BD3341e63F6Cd73951186dF')
         console.log(`drawBalance1:${ethers.formatEther(drawBalance1)}`)
 
-        const tx1 = await gameContract.drawGame()
+        const tx1 = await game1Contract.drawGame()
         await tx1.wait()
         console.log(`交易详情：开奖`)
 
-        const winnerAddress = await gameContract.winner()
+        const winnerAddress = await game1Contract.winner()
         console.log(`赢家: ${winnerAddress}`)
         if (ethers.ZeroAddress != winnerAddress) {
             console.log('交易完成!')
         } else {
-            const tx99 = await gameContract.drawGame()
+            const tx99 = await game1Contract.drawGame()
             await tx99.wait()
             console.log(`交易详情：99`)
 
-            const winner1 = await gameContract.winner()
+            const winner1 = await game1Contract.winner()
             console.log(`确认赢家: ${winner1}`)
             if (ethers.ZeroAddress != winner1) {
                 console.log('交易确认完成!')
             } else {
-                const tx100 = await gameContract.drawGame()
+                const tx100 = await game1Contract.drawGame()
                 await tx100.wait()
                 console.log(`交易详情：100`)
 
-                const winner2 = await gameContract.winner()
+                const winner2 = await game1Contract.winner()
                 console.log(`再次确认赢家: ${winner2}`)
             }
         }
 
-        const tx15 = await gameContract.completeGame()
+        const tx15 = await game1Contract.completeGame()
         await tx15.wait()
         console.log(`交易详情：completeGame`)
 
-        const tx12 = await gameContract.getCharity()
+        const tx12 = await game1Contract.getCharity()
         await tx12.wait()
         console.log(`交易详情：getCharity`)
 
-        const tx13 = await gameContract.getWinnerReward()
+        const tx13 = await game1Contract.getWinnerReward()
         await tx13.wait()
         console.log(`交易详情：getWinnerReward`)
 
         const charityBalance = await provider.getBalance(charityAddress)
-        const drawBalance = await provider.getBalance(wallets[0].address)
+        const drawBalance = await provider.getBalance('0xd24eceF3AA9257383BD3341e63F6Cd73951186dF')
 
         if (
             parseFloat(ethers.formatEther(charityBalance)) ==
@@ -259,7 +259,7 @@ const main = async () => {
 
         console.log(`游戏: ${newGame}`)
         console.log(`gameInfo: ${gameInfo}`)
-        const winner3 = await gameContract.winner()
+        const winner3 = await game1Contract.winner()
         console.log(`赢家: ${winner3}`)
     }
 }
